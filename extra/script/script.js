@@ -84,13 +84,13 @@ function startGame() {
   checkArea.style.display = "block";
   guessInput.value = "";
   guessInput.focus();
-  setFeedback("O jogo comecou. Voce tem 10 tentativas.", "ok");
+  setFeedback("O jogo começou. Você tem 10 tentativas.", "ok");
 }
 
 function checkGuess() {
   const guess = guessInput.value.trim();
   if (!isValidGuess(guess)) {
-    setFeedback("Digite exatamente 4 numeros diferentes.", "error");
+    setFeedback("Digite exatamente 4 números diferentes.", "error");
     guessInput.focus();
     return;
   }
@@ -113,7 +113,7 @@ function checkGuess() {
   guessInput.value = "";
 
   if (bulls === 4) {
-    resetGame("Parabens, voce acertou a senha.");
+    resetGame("Parabéns, você acertou a senha.");
     return;
   }
 

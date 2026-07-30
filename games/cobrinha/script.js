@@ -14,6 +14,7 @@ let direction;
 let nextDirection;
 let score;
 let timer;
+let gameOver;
 
 function placeFood() {
   let pos;
@@ -28,10 +29,12 @@ function placeFood() {
 
 function resetGame() {
   clearInterval(timer);
+  timer = null;
   snake = [{ x: 9, y: 10 }, { x: 8, y: 10 }, { x: 7, y: 10 }];
   direction = { x: 1, y: 0 };
   nextDirection = direction;
   score = 0;
+  gameOver = false;
   food = placeFood();
   scoreNode.textContent = score;
   statusNode.textContent = "Pronto";
@@ -76,9 +79,21 @@ function draw() {
   snake.forEach((part, index) => drawCell(part, index === 0 ? "#38bdf8" : "#22c55e"));
 }
 
+function drawGameOver() {
+  ctx.fillStyle = "rgba(0, 0, 0, 0.64)";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = "#f5f7fb";
+  ctx.textAlign = "center";
+  ctx.font = "700 26px Inter, Arial, sans-serif";
+  ctx.fillText("Fim de jogo", canvas.width / 2, canvas.height / 2 - 10);
+  ctx.font = "600 14px Inter, Arial, sans-serif";
+  ctx.fillText("Clique em iniciar para jogar de novo", canvas.width / 2, canvas.height / 2 + 22);
+}
+
 function endGame() {
   clearInterval(timer);
   timer = null;
+  gameOver = true;
   statusNode.textContent = "Fim de jogo";
 }
 
@@ -94,6 +109,7 @@ function tick() {
   if (hitWall || hitSelf) {
     endGame();
     draw();
+    drawGameOver();
     return;
   }
 
@@ -111,6 +127,9 @@ function tick() {
 
 function startGame() {
   if (timer) return;
+  if (gameOver) {
+    resetGame();
+  }
   statusNode.textContent = "Jogando";
   timer = setInterval(tick, 115);
 }
