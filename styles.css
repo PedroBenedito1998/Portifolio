@@ -97,7 +97,7 @@ a {
 .hero-bg {
   position: absolute;
   inset: 0;
-  background-image: url("https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=1800&q=85");
+  background-image: url("assets/old/back.png");
   background-size: cover;
   background-position: center;
   filter: saturate(0.9) contrast(1.05);
@@ -211,6 +211,15 @@ h2 {
   font-size: 17px;
 }
 
+.profile-shot {
+  display: block;
+  width: min(260px, 100%);
+  margin-top: 28px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+}
+
 .section-heading {
   max-width: 760px;
   margin-bottom: 32px;
@@ -270,6 +279,20 @@ h2 {
   background: var(--surface-2);
 }
 
+.video-media {
+  min-height: 320px;
+  padding: 0;
+  background: #000;
+}
+
+.video-media video {
+  width: 100%;
+  height: 100%;
+  min-height: 320px;
+  object-fit: cover;
+  display: block;
+}
+
 .project-media {
   display: flex;
   align-items: end;
@@ -288,6 +311,27 @@ h2 {
   background-image:
     linear-gradient(0deg, rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.05)),
     url("https://images.unsplash.com/photo-1551632436-cbf8dd35adfa?auto=format&fit=crop&w=900&q=80");
+}
+
+.game-media {
+  background-image:
+    linear-gradient(0deg, rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.05)),
+    url("assets/old/back.png");
+}
+
+.civic-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+  padding: 6px;
+  background: #05070a;
+}
+
+.civic-gallery img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 6px;
 }
 
 .civic-media {
@@ -323,6 +367,9 @@ h2 {
 }
 
 .contact-links a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
   border: 1px solid var(--line);
   border-radius: 8px;
   padding: 16px 18px;
@@ -332,8 +379,131 @@ h2 {
   overflow-wrap: anywhere;
 }
 
+.contact-links img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
 .contact-links a:hover {
   border-color: var(--accent);
+}
+
+.game-page {
+  background:
+    linear-gradient(rgba(9, 11, 15, 0.84), rgba(9, 11, 15, 0.92)),
+    url("assets/old/back.png") center / cover fixed;
+}
+
+.game-hero {
+  padding-top: 96px;
+  background: rgba(9, 11, 15, 0.68);
+}
+
+.game-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+  gap: 32px;
+  align-items: end;
+}
+
+.rules-box,
+.game-card {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(16, 21, 29, 0.92);
+  padding: 24px;
+}
+
+.rules-box h2 {
+  margin-bottom: 16px;
+  font-size: 28px;
+}
+
+.rules-box p {
+  color: var(--muted);
+}
+
+.game-band {
+  background: rgba(11, 15, 21, 0.92);
+}
+
+.game-panel {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.8fr) minmax(0, 1.2fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.game-card h2 {
+  margin-bottom: 18px;
+}
+
+.game-label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.guess-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.guess-row input {
+  width: 150px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #080b10;
+  color: var(--text);
+  padding: 11px 12px;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.game-feedback {
+  min-height: 28px;
+  margin-top: 16px;
+  color: var(--accent);
+  font-weight: 800;
+}
+
+.game-feedback[data-type="error"] {
+  color: #fb7185;
+}
+
+.game-feedback[data-type="ok"] {
+  color: #22c55e;
+}
+
+.resultados {
+  display: grid;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.result-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.result-row span {
+  min-width: 88px;
+  font-weight: 800;
+}
+
+.result-row img {
+  width: 34px;
+  height: 34px;
+  object-fit: cover;
+  border-radius: 6px;
 }
 
 .site-footer {
@@ -374,7 +544,9 @@ h2 {
   .split,
   .contact-grid,
   .projects-grid,
-  .project-card.featured {
+  .project-card.featured,
+  .game-layout,
+  .game-panel {
     grid-template-columns: 1fr;
   }
 

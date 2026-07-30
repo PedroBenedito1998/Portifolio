@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Jogo Touros e Vacas criado por Pedro Benedito.">
+  <title>Touros e Vacas | Pedro Benedito</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="game-page">
+  <header class="site-header">
+    <a class="brand" href="../index.html">Pedro Benedito</a>
+    <nav class="nav" aria-label="Navegacao do jogo">
+      <a href="../index.html#projetos">Portfolio</a>
+      <a href="#regras">Regras</a>
+      <a href="#jogo">Jogar</a>
+      <a href="../index.html#contato">Contato</a>
+    </nav>
+    <a class="header-action" href="https://github.com/PedroBenedito1512" target="_blank" rel="noreferrer">GitHub</a>
+  </header>
+
+  <main>
+    <section class="game-hero" id="regras">
+      <div class="section-shell game-layout">
+        <div>
+          <p class="section-kicker">Projeto extra</p>
+          <h1>Touros e Vacas</h1>
+          <p class="hero-lead">
+            Um jogo de logica: descubra a senha de 4 digitos diferentes usando as dicas
+            de touros e vacas a cada tentativa.
+          </p>
+        </div>
+
+        <div class="rules-box">
+          <h2>Como jogar</h2>
+          <p>O touro indica um digito certo na posicao certa.</p>
+          <p>A vaca indica um digito certo na posicao errada.</p>
+          <p>Voce tem 10 tentativas para descobrir a senha.</p>
+          <p>Use apenas 4 numeros diferentes.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="game-band" id="jogo">
+      <div class="section-shell game-panel">
+        <div class="game-card" id="gerarNumeros">
+          <p class="section-kicker">Play game</p>
+          <h2>Vamos jogar</h2>
+          <button class="button primary playGame" id="playGame">Comecar jogo</button>
+        </div>
+
+        <div class="game-card verificacao" style="display: none">
+          <label class="game-label" for="senhaDeChute">Seu palpite</label>
+          <div class="guess-row">
+            <input type="text" id="senhaDeChute" maxlength="4" inputmode="numeric" placeholder="1234">
+            <button class="button primary" id="verificarBtn">Verificar</button>
+          </div>
+          <div id="feedback" class="game-feedback" role="status"></div>
+          <div id="resultados" class="resultados"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>Touros e Vacas</span>
+    <span>Projeto JavaScript</span>
+  </footer>
+
+  <script src="script/script.js"></script>
+</body>
+</html>
