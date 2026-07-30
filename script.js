@@ -14,9 +14,6 @@ const themes = ["", "violet", "red", "green", "blue"];
 const prefersDarkMode = window.matchMedia("(prefers-color-scheme: dark)");
 let themeIndex = 0;
 let colorMode = "dark";
-let cursorFrame = 0;
-let cursorX = window.innerWidth / 2;
-let cursorY = window.innerHeight / 2;
 let toastTimeout = 0;
 
 function syncHeader() {
@@ -98,27 +95,6 @@ function setupReveal() {
   revealCards.forEach((card) => observer.observe(card));
 }
 
-function setupCursorShade() {
-  if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
-
-  window.addEventListener("pointermove", (event) => {
-    document.body.classList.add("is-pointer-active");
-    cursorX = event.clientX;
-    cursorY = event.clientY;
-
-    if (cursorFrame) return;
-    cursorFrame = window.requestAnimationFrame(() => {
-      document.documentElement.style.setProperty("--cursor-x", `${cursorX}px`);
-      document.documentElement.style.setProperty("--cursor-y", `${cursorY}px`);
-      cursorFrame = 0;
-    });
-  }, { passive: true });
-
-  window.addEventListener("pointerleave", () => {
-    document.body.classList.remove("is-pointer-active");
-  }, { passive: true });
-}
-
 function finishLoading() {
   document.body.classList.remove("is-loading");
   if (!loader) return;
@@ -151,7 +127,6 @@ filterButtons.forEach((button) => {
   button.addEventListener("click", () => filterProjects(button.dataset.filter));
 });
 setupReveal();
-setupCursorShade();
 syncHeader();
 window.addEventListener("load", () => window.setTimeout(finishLoading, 720), { once: true });
 window.setTimeout(finishLoading, 2200);
