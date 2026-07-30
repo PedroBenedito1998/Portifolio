@@ -1041,6 +1041,26 @@ h3 {
   object-fit: contain;
 }
 
+.contact-icon {
+  width: 24px;
+  height: 24px;
+  flex: 0 0 24px;
+}
+
+.whatsapp-icon circle {
+  fill: color-mix(in srgb, #25d366 84%, var(--accent) 16%);
+}
+
+.whatsapp-icon path:first-of-type {
+  fill: none;
+  stroke: #061018;
+  stroke-width: 1.7;
+}
+
+.whatsapp-icon path:last-of-type {
+  fill: #061018;
+}
+
 .contact-links a:hover {
   border-color: var(--accent);
 }
