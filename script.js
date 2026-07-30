@@ -8,6 +8,10 @@ const loader = document.querySelector("[data-loader]");
 const filterButtons = document.querySelectorAll("[data-filter]");
 const projectCards = document.querySelectorAll("[data-project-card]");
 const revealCards = document.querySelectorAll(".reveal-card");
+const sectionLinks = document.querySelectorAll('.nav a[href^="#"]');
+const trackedSections = Array.from(sectionLinks)
+  .map((link) => document.querySelector(link.getAttribute("href")))
+  .filter(Boolean);
 const themeStorageKey = "portfolio-theme-index-v2";
 const modeStorageKey = "portfolio-color-mode-v1";
 const themes = ["", "violet", "red", "green", "blue"];
@@ -15,6 +19,9 @@ const prefersDarkMode = window.matchMedia("(prefers-color-scheme: dark)");
 let themeIndex = 0;
 let colorMode = "dark";
 let toastTimeout = 0;
+let pointerFrame = 0;
+let pointerX = window.innerWidth / 2;
+let pointerY = window.innerHeight / 2;
 
 function syncHeader() {
   if (!header) return;
@@ -95,6 +102,77 @@ function setupReveal() {
   revealCards.forEach((card) => observer.observe(card));
 }
 
+function setActiveSection(id) {
+  sectionLinks.forEach((link) => {
+    const isActive = link.getAttribute("href") === `#${id}`;
+    link.classList.toggle("is-active", isActive);
+    if (isActive) {
+      link.setAttribute("aria-current", "page");
+    } else {
+      link.removeAttribute("aria-current");
+    }
+  });
+}
+
+function syncActiveSection() {
+  if (!trackedSections.length) return;
+
+  const pageBottom = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 8;
+  if (pageBottom) {
+    setActiveSection(trackedSections[trackedSections.length - 1].id);
+    return;
+  }
+
+  const marker = window.scrollY + window.innerHeight * 0.66;
+  let current = trackedSections[0];
+
+  trackedSections.forEach((section) => {
+    if (section.offsetTop <= marker) {
+      current = section;
+    }
+  });
+
+  setActiveSection(current.id);
+}
+
+function setupAnchorScroll() {
+  document.querySelectorAll('a[href^="#"]').forEach((link) => {
+    link.addEventListener("click", (event) => {
+      const targetId = link.getAttribute("href");
+      if (!targetId || targetId === "#") return;
+
+      const target = document.querySelector(targetId);
+      if (!target) return;
+
+      event.preventDefault();
+      target.scrollIntoView({ block: "start", behavior: "smooth" });
+      window.history.pushState(null, "", targetId);
+      setActiveSection(target.id);
+    });
+  });
+}
+
+function setupPointerGlow() {
+  if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+
+  window.addEventListener("pointermove", (event) => {
+    pointerX = event.clientX;
+    pointerY = event.clientY;
+    document.body.classList.add("is-pointer-active");
+
+    if (pointerFrame) return;
+    pointerFrame = window.requestAnimationFrame(() => {
+      document.documentElement.style.setProperty("--pointer-x", `${pointerX}px`);
+      document.documentElement.style.setProperty("--pointer-y", `${pointerY}px`);
+      pointerFrame = 0;
+    });
+  }, { passive: true });
+
+  window.addEventListener("pointerleave", () => {
+    document.body.classList.remove("is-pointer-active");
+  }, { passive: true });
+}
+
 function finishLoading() {
   document.body.classList.remove("is-loading");
   if (!loader) return;
@@ -117,6 +195,7 @@ if (savedMode === "dark" || savedMode === "light") {
 applyTheme(themeIndex);
 applyColorMode(colorMode);
 window.addEventListener("scroll", syncHeader, { passive: true });
+window.addEventListener("scroll", syncActiveSection, { passive: true });
 if (modeSwitch) {
   modeSwitch.addEventListener("click", nextColorMode);
 }
@@ -126,7 +205,10 @@ themeButtons.forEach((button) => {
 filterButtons.forEach((button) => {
   button.addEventListener("click", () => filterProjects(button.dataset.filter));
 });
+setupAnchorScroll();
 setupReveal();
+setupPointerGlow();
 syncHeader();
+syncActiveSection();
 window.addEventListener("load", () => window.setTimeout(finishLoading, 720), { once: true });
 window.setTimeout(finishLoading, 2200);
