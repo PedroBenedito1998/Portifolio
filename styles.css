@@ -335,8 +335,6 @@ input {
   transition: color 160ms ease, border-color 160ms ease, background 160ms ease, transform 160ms ease;
 }
 
-.nav a:hover,
-.nav a.is-active,
 .button:hover,
 .theme-button:hover,
 .header-action:hover,
@@ -346,7 +344,17 @@ input {
   background: var(--accent);
 }
 
+.nav a:not(.is-active):hover {
+  color: var(--accent);
+  border-color: color-mix(in srgb, var(--accent) 70%, transparent);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 12%, transparent);
+}
+
 .nav a.is-active {
+  color: var(--on-accent);
+  border-color: var(--accent);
+  background: var(--accent);
   padding-inline: 20px;
   transform: scale(1.04);
   box-shadow: 0 10px 28px color-mix(in srgb, var(--accent) 18%, transparent);
@@ -931,11 +939,17 @@ h3 {
   font-weight: 800;
 }
 
-.filter-button:hover,
 .filter-button.is-active {
   color: var(--on-accent);
   border-color: var(--accent);
   background: var(--accent);
+}
+
+.filter-button:not(.is-active):hover {
+  color: var(--accent);
+  border-color: color-mix(in srgb, var(--accent) 70%, transparent);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 12%, transparent);
 }
 
 .project-row.is-hidden,
