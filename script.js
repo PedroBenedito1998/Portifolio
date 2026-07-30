@@ -3,8 +3,12 @@ const themeButton = document.querySelector("[data-theme-button]");
 const filterButtons = document.querySelectorAll("[data-filter]");
 const projectCards = document.querySelectorAll("[data-project-card]");
 const revealCards = document.querySelectorAll(".reveal-card");
-const themes = ["", "violet", "red", "green"];
+const themeStorageKey = "portfolio-theme-index-v2";
+const themes = ["", "violet", "red", "green", "blue"];
 let themeIndex = 0;
+let cursorFrame = 0;
+let cursorX = window.innerWidth / 2;
+let cursorY = window.innerHeight / 2;
 
 function syncHeader() {
   if (!header) return;
@@ -14,7 +18,7 @@ function syncHeader() {
 function applyTheme(index) {
   const theme = themes[index] || "";
   document.body.dataset.theme = theme;
-  localStorage.setItem("portfolio-theme-index", String(index));
+  localStorage.setItem(themeStorageKey, String(index));
 }
 
 function nextTheme() {
@@ -51,7 +55,28 @@ function setupReveal() {
   revealCards.forEach((card) => observer.observe(card));
 }
 
-const savedTheme = Number(localStorage.getItem("portfolio-theme-index"));
+function setupCursorShade() {
+  if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+
+  window.addEventListener("pointermove", (event) => {
+    document.body.classList.add("is-pointer-active");
+    cursorX = event.clientX;
+    cursorY = event.clientY;
+
+    if (cursorFrame) return;
+    cursorFrame = window.requestAnimationFrame(() => {
+      document.documentElement.style.setProperty("--cursor-x", `${cursorX}px`);
+      document.documentElement.style.setProperty("--cursor-y", `${cursorY}px`);
+      cursorFrame = 0;
+    });
+  }, { passive: true });
+
+  window.addEventListener("pointerleave", () => {
+    document.body.classList.remove("is-pointer-active");
+  }, { passive: true });
+}
+
+const savedTheme = Number(localStorage.getItem(themeStorageKey));
 if (!Number.isNaN(savedTheme) && savedTheme >= 0 && savedTheme < themes.length) {
   themeIndex = savedTheme;
 }
@@ -63,4 +88,5 @@ filterButtons.forEach((button) => {
   button.addEventListener("click", () => filterProjects(button.dataset.filter));
 });
 setupReveal();
+setupCursorShade();
 syncHeader();
