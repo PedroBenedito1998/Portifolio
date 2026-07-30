@@ -123,16 +123,63 @@ input {
   align-items: center;
   gap: 12px;
   min-width: 0;
+  padding: 4px 10px 4px 4px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  color: var(--text);
   font-weight: 800;
   letter-spacing: 0;
+  transition: color 160ms ease, border-color 160ms ease, background 160ms ease, transform 160ms ease;
 }
 
 .brand img {
-  width: 46px;
-  height: 46px;
+  width: 48px;
+  height: 48px;
   object-fit: cover;
-  border: 1px solid rgba(255, 255, 255, 0.26);
-  border-radius: 8px;
+  object-position: center 18%;
+  border: 1px solid color-mix(in srgb, var(--accent) 46%, white 12%);
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, var(--accent) 10%, transparent),
+    0 10px 24px rgba(0, 0, 0, 0.24);
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.brand span {
+  position: relative;
+}
+
+.brand span::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -5px;
+  height: 2px;
+  border-radius: 999px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 180ms ease;
+}
+
+.brand:hover {
+  color: var(--text);
+  border-color: color-mix(in srgb, var(--accent) 34%, transparent);
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+  transform: translateY(-1px);
+}
+
+.brand:hover img {
+  transform: scale(1.06) rotate(-2deg);
+  border-color: color-mix(in srgb, var(--accent) 80%, white 10%);
+  box-shadow:
+    0 0 0 4px color-mix(in srgb, var(--accent) 14%, transparent),
+    0 14px 30px rgba(0, 0, 0, 0.3);
+}
+
+.brand:hover span::after {
+  transform: scaleX(1);
 }
 
 .nav {
