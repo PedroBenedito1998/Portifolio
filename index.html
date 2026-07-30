@@ -36,14 +36,24 @@
       <a href="#contato">Contato</a>
     </nav>
 
-    <button class="theme-button" type="button" data-theme-button aria-label="Mudar cor do site">
-      <span>Mudar tema</span>
-    </button>
+    <div class="header-controls" aria-label="Opcoes visuais do site">
+      <button class="mode-switch" type="button" data-mode-switch role="switch" aria-checked="true" aria-label="Alternar modo escuro">
+        <span class="mode-switch-track" aria-hidden="true">
+          <span class="mode-switch-thumb" data-mode-icon>☾</span>
+        </span>
+        <span class="mode-switch-text" data-mode-label>Modo escuro</span>
+      </button>
+      <button class="theme-button" type="button" data-theme-button aria-label="Mudar cor do site">
+        <span>Mudar tema</span>
+      </button>
+    </div>
   </header>
 
   <button class="theme-fab" type="button" data-theme-button aria-label="Mudar cor do site">
     Mudar tema
   </button>
+
+  <div class="toast" data-mode-toast role="status" aria-live="polite"></div>
 
   <main>
     <section class="hero" id="inicio" aria-labelledby="hero-title">
