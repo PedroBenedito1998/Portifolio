@@ -21,6 +21,8 @@
       <a href="#sobre">Sobre</a>
       <a href="#habilidades">Habilidades</a>
       <a href="#projetos">Projetos</a>
+      <a href="#jogos">Jogos</a>
+      <a href="#aplicados">Aplicados</a>
       <a href="#experiencia">Experiencia</a>
       <a href="#contato">Contato</a>
     </nav>
@@ -117,8 +119,15 @@
           </p>
         </div>
 
+        <div class="filter-bar" aria-label="Filtrar projetos">
+          <button class="filter-button is-active" type="button" data-filter="all">Todos</button>
+          <button class="filter-button" type="button" data-filter="java">Java</button>
+          <button class="filter-button" type="button" data-filter="web">Web</button>
+          <button class="filter-button" type="button" data-filter="javascript">JavaScript</button>
+        </div>
+
         <div class="project-list">
-          <article class="project-row">
+          <article class="project-row reveal-card" data-project-card data-kind="java">
             <div class="project-preview video-media">
               <video src="assets/old/demo.mp4" autoplay muted loop playsinline preload="metadata"></video>
             </div>
@@ -140,7 +149,7 @@
             </div>
           </article>
 
-          <article class="project-row">
+          <article class="project-row reveal-card" data-project-card data-kind="web">
             <iframe class="project-preview" title="Preview loja de tenis" src="https://web-2024-pedro-benedito.vercel.app/css4/index.html" loading="lazy"></iframe>
             <div class="project-info">
               <p class="project-tag">HTML + CSS</p>
@@ -161,7 +170,7 @@
             </div>
           </article>
 
-          <article class="project-row">
+          <article class="project-row reveal-card" data-project-card data-kind="javascript">
             <iframe class="project-preview" title="Preview fila e pilha" src="https://web-2024-pedro-benedito.vercel.app/filaEPilha/index.html" loading="lazy"></iframe>
             <div class="project-info">
               <p class="project-tag">JavaScript</p>
@@ -182,7 +191,7 @@
             </div>
           </article>
 
-          <article class="project-row">
+          <article class="project-row reveal-card" data-project-card data-kind="javascript">
             <iframe class="project-preview" title="Preview fila visual" src="https://web-2024-pedro-benedito.vercel.app/fifo/index.html" loading="lazy"></iframe>
             <div class="project-info">
               <p class="project-tag">HTML + CSS + JS</p>
@@ -203,26 +212,110 @@
             </div>
           </article>
 
-          <article class="project-row">
-            <div class="project-preview game-media">
+        </div>
+      </div>
+    </section>
+
+    <section class="games-band" id="jogos">
+      <div class="section-shell">
+        <div class="section-heading compact-heading">
+          <p class="section-kicker">Projetos de jogos</p>
+          <h2>Mini jogos para mostrar logica, DOM e interacao.</h2>
+          <p>
+            Esta secao fica mais leve para entrevista: mostra raciocinio, eventos,
+            estados e regras sem misturar com projetos academicos maiores.
+          </p>
+        </div>
+
+        <div class="games-grid">
+          <article class="game-tile reveal-card">
+            <div class="game-cover bulls-cover">
               <span>Touros e Vacas</span>
             </div>
-            <div class="project-info">
-              <p class="project-tag">JavaScript + logica</p>
-              <h3>Jogo Touros e Vacas</h3>
-              <p class="project-summary">
-                Jogo interativo em que o usuario tenta descobrir uma senha de 4 digitos
-                usando pistas a cada tentativa.
-              </p>
+            <div class="game-tile-body">
+              <h3>Touros e Vacas</h3>
+              <p>Jogo de deducao com senha de 4 digitos, validacao e historico de tentativas.</p>
               <div class="project-notes">
+                <span>JavaScript</span>
                 <span>Validacao</span>
-                <span>Logica de jogo</span>
-                <span>Feedback visual</span>
+                <span>Logica</span>
               </div>
-              <div class="project-actions">
-                <a class="button small" href="extra/index.html">Jogar</a>
-              </div>
+              <a class="button small" href="extra/index.html">Jogar</a>
             </div>
+          </article>
+
+          <article class="game-tile reveal-card">
+            <div class="game-cover snake-cover">
+              <span>Cobrinha</span>
+            </div>
+            <div class="game-tile-body">
+              <h3>Cobrinha</h3>
+              <p>Versao simples do Snake com canvas, pontuacao, colisao e controle por teclado.</p>
+              <div class="project-notes">
+                <span>Canvas</span>
+                <span>Loop de jogo</span>
+                <span>Eventos</span>
+              </div>
+              <a class="button small" href="games/cobrinha/index.html">Jogar</a>
+            </div>
+          </article>
+
+          <article class="game-tile reveal-card">
+            <div class="game-cover memory-cover">
+              <span>Memoria</span>
+            </div>
+            <div class="game-tile-body">
+              <h3>Jogo da Memoria</h3>
+              <p>Jogo de pares com embaralhamento, controle de estado, tentativas e reinicio.</p>
+              <div class="project-notes">
+                <span>DOM</span>
+                <span>Estado</span>
+                <span>Interacao</span>
+              </div>
+              <a class="button small" href="games/memoria/index.html">Jogar</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="applied-band" id="aplicados">
+      <div class="section-shell">
+        <div class="section-heading compact-heading">
+          <p class="section-kicker">Projetos aplicados</p>
+          <h2>Automacoes e estudos que mostram resolucao de problema real.</h2>
+          <p>
+            Coloquei aqui apenas o que ajuda na entrevista: Python, Lua, automacao,
+            organizacao de estado, performance e integracao com servicos.
+          </p>
+        </div>
+
+        <div class="applied-grid">
+          <article class="applied-card reveal-card">
+            <span>Python + Discord API</span>
+            <h3>Bots para Discord</h3>
+            <p>
+              Bots com comandos, lembretes, mensagens automaticas, agendamentos e bot de musica.
+              Projeto bom para falar de eventos, APIs, persistencia local e automacao de rotina.
+            </p>
+          </article>
+
+          <article class="applied-card reveal-card">
+            <span>Lua + otimizacao</span>
+            <h3>Custom scripts e interfaces</h3>
+            <p>
+              Scripts Lua com foco em organizacao, performance, configuracoes visuais e resposta
+              rapida a eventos. Bom para mostrar cuidado com estado, tempo de execucao e refatoracao.
+            </p>
+          </article>
+
+          <article class="applied-card reveal-card">
+            <span>Python + experimentos</span>
+            <h3>TCC em QoS</h3>
+            <p>
+              Estudo em andamento envolvendo QoS, scripts de experimento e geracao de graficos.
+              Vale detalhar melhor quando voce trouxer o resumo, tecnologias e objetivo final.
+            </p>
           </article>
         </div>
       </div>
@@ -249,6 +342,11 @@
             <span>Experiencia pratica</span>
             <h3>Hacker Cidadao</h3>
             <p>Desenvolvimento de proposta de MVP em equipe, com prazo curto, apresentacao e validacao de ideia.</p>
+          </article>
+          <article class="timeline-card">
+            <span>Projetos pessoais</span>
+            <h3>Automacoes e bots</h3>
+            <p>Construcao de ferramentas proprias para organizar avisos, comandos e rotinas com Python e Lua.</p>
           </article>
           <article class="timeline-card empty-slot">
             <span>Proximo passo</span>

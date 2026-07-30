@@ -257,11 +257,13 @@ h3 {
 
 .intro-band,
 .projects-band,
+.games-band,
 .contact-band {
   background: color-mix(in srgb, var(--bg) 88%, black 12%);
 }
 
 .skills-band,
+.applied-band,
 .experience-band {
   background: color-mix(in srgb, var(--surface) 86%, black 14%);
 }
@@ -332,12 +334,14 @@ h3 {
 }
 
 .timeline-grid {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .skill-card,
 .timeline-card,
 .project-row,
+.game-tile,
+.applied-card,
 .civic-showcase,
 .contact-links a,
 .rules-box,
@@ -345,6 +349,63 @@ h3 {
   border: 1px solid var(--line);
   border-radius: 8px;
   background: var(--surface);
+}
+
+.skill-card,
+.timeline-card,
+.project-row,
+.game-tile,
+.applied-card,
+.civic-showcase,
+.contact-links a {
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
+}
+
+.skill-card:hover,
+.timeline-card:hover,
+.project-row:hover,
+.game-tile:hover,
+.applied-card:hover,
+.civic-showcase:hover,
+.contact-links a:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--accent) 70%, white 10%);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.26);
+}
+
+.nav a:focus-visible,
+.button:focus-visible,
+.theme-button:focus-visible,
+.brand:focus-visible,
+.filter-button:focus-visible,
+.contact-links a:focus-visible,
+.game-control:focus-visible,
+.memory-card:focus-visible,
+.guess-row input:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--accent) 80%, white 20%);
+  outline-offset: 3px;
+}
+
+.button:active,
+.theme-button:active,
+.filter-button:active,
+.game-control:active,
+.memory-card:active {
+  transform: translateY(1px);
+}
+
+.reveal-card {
+  opacity: 0;
+  transform: translateY(18px);
+}
+
+.reveal-card.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-card.is-visible:hover {
+  transform: translateY(-3px);
 }
 
 .skill-card,
@@ -370,6 +431,34 @@ h3 {
 .project-list {
   display: grid;
   gap: 18px;
+}
+
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0 0 22px;
+}
+
+.filter-button {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 9px 13px;
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.04);
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.filter-button:hover,
+.filter-button.is-active {
+  color: #061018;
+  border-color: var(--accent);
+  background: var(--accent);
+}
+
+.project-row.is-hidden {
+  display: none;
 }
 
 .project-row {
@@ -422,6 +511,70 @@ h3 {
   font-weight: 800;
   color: var(--text);
   text-shadow: 0 2px 16px rgba(0, 0, 0, 0.7);
+}
+
+.games-grid,
+.applied-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.game-tile,
+.applied-card {
+  overflow: hidden;
+}
+
+.game-cover {
+  min-height: 190px;
+  display: flex;
+  align-items: end;
+  padding: 20px;
+  background: var(--surface-2);
+}
+
+.game-cover span {
+  color: var(--text);
+  font-size: 28px;
+  font-weight: 800;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.7);
+}
+
+.bulls-cover {
+  background:
+    linear-gradient(0deg, rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.08)),
+    url("assets/old/back.png") center / cover;
+}
+
+.snake-cover {
+  background:
+    linear-gradient(135deg, rgba(34, 197, 94, 0.82), rgba(3, 7, 18, 0.7)),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.12) 0 1px, transparent 1px 22px);
+}
+
+.memory-cover {
+  background:
+    linear-gradient(135deg, rgba(56, 189, 248, 0.76), rgba(15, 23, 42, 0.82)),
+    radial-gradient(circle at 28% 30%, rgba(255, 255, 255, 0.22), transparent 24%);
+}
+
+.game-tile-body,
+.applied-card {
+  padding: 22px;
+}
+
+.game-tile-body p,
+.applied-card p {
+  color: var(--muted);
+}
+
+.applied-card span {
+  display: inline-block;
+  margin-bottom: 12px;
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
 }
 
 .civic-showcase {
@@ -585,6 +738,111 @@ h3 {
   border-radius: 6px;
 }
 
+.playfield-card {
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.score-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.snake-canvas {
+  width: 100%;
+  aspect-ratio: 1;
+  display: block;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #05070a;
+}
+
+.game-controls {
+  display: grid;
+  grid-template-columns: repeat(3, 52px);
+  justify-content: center;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.game-control {
+  width: 52px;
+  height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.04);
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.game-control[data-dir="up"] {
+  grid-column: 2;
+}
+
+.game-control[data-dir="left"] {
+  grid-column: 1;
+}
+
+.game-control[data-dir="right"] {
+  grid-column: 3;
+}
+
+.game-control[data-dir="down"] {
+  grid-column: 2;
+}
+
+.memory-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(62px, 1fr));
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.memory-card {
+  min-height: 78px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--text);
+  background: linear-gradient(135deg, var(--surface-2), rgba(255, 255, 255, 0.04));
+  cursor: pointer;
+  font-size: 28px;
+  font-weight: 800;
+}
+
+.memory-card.is-open,
+.memory-card.is-found {
+  color: #061018;
+  border-color: var(--accent);
+  background: var(--accent);
+}
+
+.memory-card.is-found {
+  opacity: 0.72;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+
+  .reveal-card {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 @media (max-width: 900px) {
   .site-header {
     grid-template-columns: 1fr auto;
@@ -620,7 +878,9 @@ h3 {
   }
 
   .skills-grid,
-  .timeline-grid {
+  .timeline-grid,
+  .games-grid,
+  .applied-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
@@ -637,7 +897,9 @@ h3 {
   }
 
   .skills-grid,
-  .timeline-grid {
+  .timeline-grid,
+  .games-grid,
+  .applied-grid {
     grid-template-columns: 1fr;
   }
 

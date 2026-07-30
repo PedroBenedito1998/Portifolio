@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Jogo da cobrinha em JavaScript criado por Pedro Benedito.">
+  <title>Cobrinha | Pedro Benedito</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../styles.css">
+</head>
+<body class="game-page">
+  <header class="site-header">
+    <a class="brand" href="../../index.html#jogos">
+      <img src="../../assets/old/logo.jfif" alt="Logo Pedro Benedito">
+      <span>Voltar aos jogos</span>
+    </a>
+    <nav class="nav" aria-label="Navegacao do jogo">
+      <a href="../../index.html">Portfolio</a>
+      <a href="../memoria/index.html">Memoria</a>
+      <a href="../../extra/index.html">Touros e Vacas</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="game-hero">
+      <div class="section-shell game-layout">
+        <div>
+          <p class="section-kicker">Canvas + loop</p>
+          <h1>Cobrinha</h1>
+          <p class="hero-lead">Use as setas ou WASD para controlar. No celular, use os botoes abaixo do tabuleiro.</p>
+        </div>
+        <div class="rules-box">
+          <h2>Objetivo</h2>
+          <p>Coma os pontos, cresca e evite bater nas bordas ou no proprio corpo.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="game-band">
+      <div class="section-shell">
+        <div class="game-card playfield-card">
+          <div class="score-row">
+            <span>Pontos: <strong data-score>0</strong></span>
+            <span data-status>Pronto</span>
+          </div>
+          <canvas class="snake-canvas" width="400" height="400" data-snake></canvas>
+          <div class="game-controls" aria-label="Controles da cobrinha">
+            <button class="game-control" type="button" data-dir="up">W</button>
+            <button class="game-control" type="button" data-dir="left">A</button>
+            <button class="game-control" type="button" data-dir="right">D</button>
+            <button class="game-control" type="button" data-dir="down">S</button>
+          </div>
+          <div class="hero-actions">
+            <button class="button primary" type="button" data-start>Iniciar</button>
+            <button class="button secondary" type="button" data-reset>Reiniciar</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
