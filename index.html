@@ -28,23 +28,19 @@
     </a>
 
     <nav class="nav" aria-label="Navegação principal">
-      <a href="#sobre">Sobre</a>
       <a href="#habilidades">Habilidades</a>
       <a href="#projetos">Projetos</a>
-      <a href="#jogos">Jogos</a>
-      <a href="#aplicados">Aplicados</a>
       <a href="#experiencia">Experiência</a>
       <a href="#contato">Contato</a>
     </nav>
 
     <button class="theme-button" type="button" data-theme-button aria-label="Mudar cor do site">
-      <img src="assets/old/changee-Photoroom.png-Photoroom.png" alt="">
-      <span>Tema</span>
+      <span>Mudar tema</span>
     </button>
   </header>
 
   <button class="theme-fab" type="button" data-theme-button aria-label="Mudar cor do site">
-    <img src="assets/old/changee-Photoroom.png-Photoroom.png" alt="">
+    Mudar tema
   </button>
 
   <main>
@@ -67,49 +63,21 @@
           </div>
         </div>
 
-        <aside class="hero-card reveal-card" aria-label="Resumo profissional">
-          <span>Disponível para primeira oportunidade</span>
-          <p>
-            Gosto de transformar estudo, rotina e problemas reais em soluções claras:
-            sites, bots, automações, experimentos de rede e ferramentas simples de manter.
-          </p>
-          <div class="hero-card-tags">
-            <b>QoS / SDN</b>
-            <b>Python</b>
-            <b>JavaScript</b>
-            <b>SQL</b>
-          </div>
-        </aside>
-      </div>
-    </section>
-
-    <section class="intro-band" id="sobre">
-      <div class="section-shell about-grid">
-        <div>
-          <p class="section-kicker">Sobre mim</p>
-          <h2>Aprendo construindo soluções úteis, organizadas e fáceis de manter.</h2>
-          <img class="profile-shot" src="assets/old/perfil.png" alt="Foto de Pedro Benedito">
-        </div>
-
-        <div class="about-copy">
-          <p>
-            Sou formando em Ciência da Computação na UNICAP. Tenho trabalhado com
-            Java, Python, SQL, modelagem de banco de dados, redes de computadores
-            e desenvolvimento web com HTML, CSS e JavaScript.
-          </p>
-          <p>
-            Procuro a primeira oportunidade profissional em tecnologia para evoluir
-            com um time experiente, participar de projetos reais e contribuir com
-            responsabilidade, organização, pesquisa e vontade de aprender.
-          </p>
-          <div class="quick-facts">
-            <span>Backend</span>
-            <span>Banco de dados</span>
-            <span>Redes</span>
-            <span>Pesquisa e desenvolvimento</span>
-            <span>Frontend</span>
-            <span>Trabalho em equipe</span>
-          </div>
+        <div class="hero-side">
+          <img class="hero-portrait" src="assets/old/newPROFILE.jpg" alt="Foto de Pedro Benedito">
+          <aside class="hero-card reveal-card" aria-label="Resumo profissional">
+            <span>Disponível para primeira oportunidade</span>
+            <p>
+              Gosto de transformar estudo, rotina e problemas reais em soluções claras:
+              sites, bots, automações, experimentos de rede e ferramentas simples de manter.
+            </p>
+            <div class="hero-card-tags">
+              <b>QoS / SDN</b>
+              <b>Python</b>
+              <b>JavaScript</b>
+              <b>SQL</b>
+            </div>
+          </aside>
         </div>
       </div>
     </section>
@@ -118,7 +86,7 @@
       <div class="section-shell">
         <div class="section-heading">
           <p class="section-kicker">Habilidades</p>
-          <h2>O que estou desenvolvendo agora.</h2>
+          <h2>Com o que já tive experiência.</h2>
         </div>
 
         <div class="skills-grid">
@@ -149,19 +117,14 @@
     <section class="projects-band" id="projetos">
       <div class="section-shell">
         <div class="section-heading compact-heading">
-          <p class="section-kicker">Projetos</p>
-          <h2>Projetos separados por objetivo, tecnologia e aprendizado.</h2>
-          <p>
-            A ideia aqui é facilitar a entrevista: cada projeto mostra rapidamente
-            o que foi feito, qual tecnologia usei e o que aprendi.
-          </p>
+          <h2>Projetos</h2>
         </div>
 
         <div class="filter-bar" aria-label="Filtrar projetos">
           <button class="filter-button is-active" type="button" data-filter="all">Todos</button>
           <button class="filter-button" type="button" data-filter="java">Java</button>
-          <button class="filter-button" type="button" data-filter="web">Web</button>
-          <button class="filter-button" type="button" data-filter="javascript">JavaScript</button>
+          <button class="filter-button" type="button" data-filter="bots">Bots</button>
+          <button class="filter-button" type="button" data-filter="game">Jogos</button>
         </div>
 
         <div class="project-list">
@@ -187,86 +150,35 @@
             </div>
           </article>
 
-          <article class="project-row reveal-card" data-project-card data-kind="web">
-            <iframe class="project-preview" title="Preview da loja de tênis" src="https://web-2024-pedro-benedito.vercel.app/css4/index.html" loading="lazy"></iframe>
-            <div class="project-info">
-              <p class="project-tag">HTML + CSS</p>
-              <h3>Loja de Tênis</h3>
-              <p class="project-summary">
-                Primeira interface de loja criada para praticar estrutura de página,
-                componentes visuais e organização com CSS.
-              </p>
-              <div class="project-notes">
-                <span>Layout</span>
-                <span>CSS</span>
-                <span>Responsividade inicial</span>
-              </div>
-              <div class="project-actions">
-                <a class="button small" href="https://web-2024-pedro-benedito.vercel.app/css4/index.html" target="_blank" rel="noreferrer">Demo</a>
-                <a class="button small secondary" href="https://github.com/PedroBenedito1512/web_2024_pedro_benedito/tree/main/css4" target="_blank" rel="noreferrer">Código</a>
-              </div>
+          <article class="project-row reveal-card" data-project-card data-kind="bots">
+            <div class="project-preview code-preview" aria-hidden="true">
+              <span>Discord Bots</span>
+              <strong>Python</strong>
+              <em>slash commands · eventos · música · JSON</em>
             </div>
-          </article>
-
-          <article class="project-row reveal-card" data-project-card data-kind="javascript">
-            <iframe class="project-preview" title="Preview fila e pilha" src="https://web-2024-pedro-benedito.vercel.app/filaEPilha/index.html" loading="lazy"></iframe>
             <div class="project-info">
-              <p class="project-tag">JavaScript</p>
-              <h3>Fila e Pilha</h3>
+              <p class="project-tag">Python + Discord API</p>
+              <h3>Bots para Discord</h3>
               <p class="project-summary">
-                Simulador para comparar estruturas de dados e praticar manipulação de arrays
-                com interação na tela.
+                Conjunto de bots com comandos slash, lembretes por usuário, avisos automáticos,
+                leitura de eventos, persistência em JSON e música em chamada de voz.
               </p>
               <div class="project-notes">
-                <span>Arrays</span>
-                <span>DOM</span>
-                <span>Estruturas de dados</span>
+                <span>Discord API</span>
+                <span>Async</span>
+                <span>JSON</span>
+                <span>FFmpeg</span>
               </div>
               <div class="project-actions">
-                <a class="button small" href="https://web-2024-pedro-benedito.vercel.app/filaEPilha/index.html" target="_blank" rel="noreferrer">Demo</a>
-                <a class="button small secondary" href="https://github.com/PedroBenedito1512/web_2024_pedro_benedito/tree/main/filaEPilha" target="_blank" rel="noreferrer">Código</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="project-row reveal-card" data-project-card data-kind="javascript">
-            <iframe class="project-preview" title="Preview fila visual" src="https://web-2024-pedro-benedito.vercel.app/fifo/index.html" loading="lazy"></iframe>
-            <div class="project-info">
-              <p class="project-tag">HTML + CSS + JS</p>
-              <h3>Fila Visual</h3>
-              <p class="project-summary">
-                Evolução do desafio anterior com interface dinâmica, cores e manipulação visual
-                de elementos.
-              </p>
-              <div class="project-notes">
-                <span>DOM</span>
-                <span>CSS visual</span>
-                <span>Interatividade</span>
-              </div>
-              <div class="project-actions">
-                <a class="button small" href="https://web-2024-pedro-benedito.vercel.app/fifo/index.html" target="_blank" rel="noreferrer">Demo</a>
-                <a class="button small secondary" href="https://github.com/PedroBenedito1512/web_2024_pedro_benedito/tree/main/fifo" target="_blank" rel="noreferrer">Código</a>
+                <a class="button small" href="https://github.com/PedroBenedito1998/bots-discord" target="_blank" rel="noreferrer">Código</a>
               </div>
             </div>
           </article>
 
         </div>
-      </div>
-    </section>
 
-    <section class="games-band" id="jogos">
-      <div class="section-shell">
-        <div class="section-heading compact-heading">
-          <p class="section-kicker">Projetos de jogos</p>
-          <h2>Mini jogos para mostrar lógica, DOM e interação.</h2>
-          <p>
-            Esta seção fica mais leve para entrevista: mostra raciocínio, eventos,
-            estados e regras sem misturar com projetos acadêmicos maiores.
-          </p>
-        </div>
-
-        <div class="games-grid">
-          <article class="game-tile reveal-card">
+        <div class="games-grid project-games">
+          <article class="game-tile reveal-card" data-project-card data-kind="game">
             <div class="game-cover bulls-cover">
               <span>Touros e Vacas</span>
             </div>
@@ -282,7 +194,7 @@
             </div>
           </article>
 
-          <article class="game-tile reveal-card">
+          <article class="game-tile reveal-card" data-project-card data-kind="game">
             <div class="game-cover snake-cover">
               <span>Cobrinha</span>
             </div>
@@ -298,7 +210,7 @@
             </div>
           </article>
 
-          <article class="game-tile reveal-card">
+          <article class="game-tile reveal-card" data-project-card data-kind="game">
             <div class="game-cover memory-cover">
               <span>Memória</span>
             </div>
@@ -317,34 +229,14 @@
       </div>
     </section>
 
-    <section class="applied-band" id="aplicados">
+    <section class="experience-band" id="experiencia">
       <div class="section-shell">
         <div class="section-heading compact-heading">
-          <p class="section-kicker">Projetos aplicados</p>
-          <h2>Automações e estudos que mostram resolução de problemas reais.</h2>
-          <p>
-            Experiências práticas com scripts, integração com serviços, organização de estado
-            e cuidado com desempenho.
-          </p>
+          <h2>Experiência e formação</h2>
+          <!-- Área preparada para incluir estágio, certificados, projetos acadêmicos maiores e experiências profissionais. -->
         </div>
 
         <div class="applied-grid">
-          <article class="applied-card reveal-card">
-            <span>Python + Discord API</span>
-            <h3>Bots para Discord</h3>
-            <p>
-              Conjunto de bots com comandos slash, lembretes por usuário, avisos automáticos,
-              leitura de eventos, persistência em JSON e música em chamada de voz.
-              É um bom exemplo de automação prática, tarefas assíncronas e integração com APIs.
-            </p>
-            <div class="project-notes">
-              <span>Discord API</span>
-              <span>Async</span>
-              <span>JSON</span>
-              <span>FFmpeg</span>
-            </div>
-          </article>
-
           <article class="applied-card reveal-card">
             <span>Lua + otimização</span>
             <h3>Custom scripts e interfaces</h3>
@@ -369,20 +261,6 @@
               <span>Ryu</span>
             </div>
           </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="experience-band" id="experiencia">
-      <div class="section-shell">
-        <div class="section-heading compact-heading">
-          <p class="section-kicker">Experiência e formação</p>
-          <h2>Formação, prática e próximos passos.</h2>
-          <!-- Área preparada para incluir estágio, certificados, projetos acadêmicos maiores e experiências profissionais. -->
-          <p>
-            Uma visão rápida da minha formação, das experiências práticas e dos
-            projetos que melhor representam meu momento atual.
-          </p>
         </div>
 
         <div class="timeline-grid">
