@@ -25,8 +25,6 @@
   --hero-overlay-end: rgba(0, 0, 0, 0.04);
   --shadow: rgba(0, 0, 0, 0.28);
   --deep-shadow: rgba(0, 0, 0, 0.42);
-  --cursor-glow: color-mix(in srgb, var(--accent) 14%, transparent);
-  --cursor-dot: color-mix(in srgb, var(--accent) 70%, transparent);
   --max: 1120px;
 }
 
@@ -72,8 +70,6 @@ body[data-mode="light"] {
   --hero-overlay-end: rgba(248, 250, 252, 0.08);
   --shadow: rgba(15, 23, 42, 0.14);
   --deep-shadow: rgba(15, 23, 42, 0.18);
-  --cursor-glow: color-mix(in srgb, var(--accent) 12%, transparent);
-  --cursor-dot: color-mix(in srgb, var(--accent) 62%, transparent);
 }
 
 * {
@@ -108,8 +104,8 @@ body::before {
   pointer-events: none;
   opacity: 0;
   background:
-    radial-gradient(circle 7px at var(--pointer-x) var(--pointer-y), var(--cursor-dot), transparent 70%),
-    radial-gradient(circle 96px at var(--pointer-x) var(--pointer-y), var(--cursor-glow), transparent 74%);
+    radial-gradient(circle 7px at var(--pointer-x) var(--pointer-y), color-mix(in srgb, var(--accent) 68%, transparent), transparent 70%),
+    radial-gradient(circle 96px at var(--pointer-x) var(--pointer-y), color-mix(in srgb, var(--accent) 13%, transparent), transparent 74%);
   transition: opacity 160ms ease;
 }
 
