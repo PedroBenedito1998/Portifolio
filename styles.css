@@ -967,8 +967,9 @@ h3 {
 
 .code-preview {
   display: grid;
-  align-content: end;
-  gap: 10px;
+  align-content: center;
+  justify-items: start;
+  gap: 12px;
   padding: 28px;
   background:
     radial-gradient(circle at 22% 18%, color-mix(in srgb, var(--accent) 24%, transparent), transparent 34%),
@@ -994,6 +995,65 @@ h3 {
   color: var(--muted);
   font-style: normal;
   font-weight: 700;
+}
+
+.automation-symbol {
+  width: min(72%, 280px);
+  max-height: 190px;
+  margin-bottom: 8px;
+  overflow: visible;
+  filter: drop-shadow(0 22px 38px var(--deep-shadow));
+}
+
+.bot-window,
+.script-window {
+  fill: color-mix(in srgb, var(--surface) 72%, transparent);
+  stroke: color-mix(in srgb, var(--accent) 58%, transparent);
+  stroke-width: 3;
+}
+
+.bot-eye,
+.bot-signal,
+.gamepad-dot {
+  fill: var(--accent);
+}
+
+.bot-mouth,
+.bot-antenna,
+.chat-line,
+.music-note,
+.script-line,
+.target-ring,
+.target-cross {
+  fill: none;
+  stroke: color-mix(in srgb, var(--text) 82%, transparent);
+  stroke-width: 8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.bot-antenna,
+.chat-line,
+.music-note,
+.accent-script-line,
+.target-cross {
+  stroke: var(--accent);
+}
+
+.music-note {
+  stroke-width: 6;
+}
+
+.script-line,
+.target-ring {
+  stroke-width: 7;
+}
+
+.gamepad-body {
+  fill: color-mix(in srgb, var(--accent-2) 46%, var(--surface) 54%);
+  stroke: color-mix(in srgb, var(--text) 48%, transparent);
+  stroke-width: 3;
+  stroke-linejoin: round;
 }
 
 .game-media {
