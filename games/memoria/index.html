@@ -11,17 +11,33 @@
   <link rel="stylesheet" href="../../styles.css">
 </head>
 <body class="game-page">
-  <header class="site-header">
-    <a class="brand" href="../../index.html#jogos">
-      <img src="../../assets/old/logo.jfif" alt="Logo Pedro Benedito">
-      <span>Voltar aos jogos</span>
+  <header class="site-header" data-header>
+    <a class="brand" href="https://github.com/PedroBenedito1998" target="_blank" rel="noreferrer" aria-label="Abrir GitHub atual de Pedro Benedito">
+      <img src="../../assets/old/newPROFILE.jpg" alt="Foto de Pedro Benedito">
+      <span>Pedro Benedito</span>
     </a>
-    <nav class="nav" aria-label="Navegação do jogo">
-      <a href="../../index.html">Portfólio</a>
-      <a href="../cobrinha/index.html">Cobrinha</a>
-      <a href="../../extra/index.html">Touros e Vacas</a>
+
+    <nav class="nav" aria-label="Navegação principal">
+      <a href="../../index.html#inicio">Apresentação</a>
+      <a href="../../index.html#projetos">Projetos</a>
+      <a href="../../index.html#experiencia">Experiência</a>
+      <a href="../../index.html#contato">Contato</a>
     </nav>
+
+    <div class="header-controls" aria-label="Opcoes visuais do site">
+      <button class="mode-switch" type="button" data-mode-switch role="switch" aria-checked="true" aria-label="Alternar modo escuro">
+        <span class="mode-switch-track" aria-hidden="true">
+          <span class="mode-switch-thumb" data-mode-icon>☾</span>
+        </span>
+        <span class="mode-switch-text" data-mode-label>Modo escuro</span>
+      </button>
+      <button class="theme-button" type="button" data-theme-button aria-label="Mudar cor do site">
+        <span>Mudar tema</span>
+      </button>
+    </div>
   </header>
+
+  <div class="toast" data-mode-toast role="status" aria-live="polite"></div>
 
   <main>
     <section class="game-hero">
@@ -55,6 +71,7 @@
     </section>
   </main>
 
+  <script src="../../script.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
