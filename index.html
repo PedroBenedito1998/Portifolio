@@ -9,8 +9,18 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <noscript><style>.page-loader{display:none}</style></noscript>
 </head>
-<body>
+<body class="is-loading">
+  <div class="page-loader" data-loader aria-live="polite" aria-label="Carregando portfólio">
+    <div class="loader-card">
+      <img src="assets/old/newPROFILE.jpg" alt="">
+      <span>Preparando portfólio</span>
+      <strong>Carregando projetos...</strong>
+      <div class="loader-bar" aria-hidden="true"><i></i></div>
+    </div>
+  </div>
+
   <header class="site-header" data-header>
     <a class="brand" href="#inicio" aria-label="Voltar ao início do portfólio de Pedro Benedito">
       <img src="assets/old/newPROFILE.jpg" alt="Foto de Pedro Benedito">
@@ -33,22 +43,43 @@
     </button>
   </header>
 
+  <button class="theme-fab" type="button" data-theme-button aria-label="Mudar cor do site">
+    <img src="assets/old/changee-Photoroom.png-Photoroom.png" alt="">
+  </button>
+
   <main>
     <section class="hero" id="inicio" aria-labelledby="hero-title">
       <div class="hero-bg" role="img" aria-label="Ambiente visual de tecnologia e desenvolvimento"></div>
       <div class="hero-overlay"></div>
       <div class="hero-content">
-        <p class="eyebrow">Ciência da Computação - UNICAP</p>
-        <h1 id="hero-title">Pedro Benedito</h1>
-        <p class="hero-lead">
-          Formando em Ciência da Computação à procura da primeira oportunidade
-          em tecnologia, com base em redes, desenvolvimento web, backend,
-          banco de dados, pesquisa e desenvolvimento.
-        </p>
-        <div class="hero-actions">
-          <a class="button primary" href="#projetos">Ver projetos</a>
-          <a class="button secondary" href="mailto:pedro.benedito1998@gmail.com">Entrar em contato</a>
+        <div class="hero-copy">
+          <p class="eyebrow">Ciência da Computação - UNICAP</p>
+          <h1 id="hero-title">Pedro Benedito</h1>
+          <p class="hero-subtitle">Redes, desenvolvimento e automação</p>
+          <p class="hero-lead">
+            Formando em Ciência da Computação à procura da primeira oportunidade
+            em tecnologia, com base em redes, desenvolvimento web, backend,
+            banco de dados, pesquisa e desenvolvimento.
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="#projetos">Ver projetos</a>
+            <a class="button secondary" href="mailto:pedro.benedito1998@gmail.com">Entrar em contato</a>
+          </div>
         </div>
+
+        <aside class="hero-card reveal-card" aria-label="Resumo profissional">
+          <span>Disponível para primeira oportunidade</span>
+          <p>
+            Gosto de transformar estudo, rotina e problemas reais em soluções claras:
+            sites, bots, automações, experimentos de rede e ferramentas simples de manter.
+          </p>
+          <div class="hero-card-tags">
+            <b>QoS / SDN</b>
+            <b>Python</b>
+            <b>JavaScript</b>
+            <b>SQL</b>
+          </div>
+        </aside>
       </div>
     </section>
 

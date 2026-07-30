@@ -1,5 +1,6 @@
 const header = document.querySelector("[data-header]");
-const themeButton = document.querySelector("[data-theme-button]");
+const themeButtons = document.querySelectorAll("[data-theme-button]");
+const loader = document.querySelector("[data-loader]");
 const filterButtons = document.querySelectorAll("[data-filter]");
 const projectCards = document.querySelectorAll("[data-project-card]");
 const revealCards = document.querySelectorAll(".reveal-card");
@@ -76,6 +77,13 @@ function setupCursorShade() {
   }, { passive: true });
 }
 
+function finishLoading() {
+  document.body.classList.remove("is-loading");
+  if (!loader) return;
+  loader.classList.add("is-hidden");
+  window.setTimeout(() => loader.remove(), 420);
+}
+
 const savedTheme = Number(localStorage.getItem(themeStorageKey));
 if (!Number.isNaN(savedTheme) && savedTheme >= 0 && savedTheme < themes.length) {
   themeIndex = savedTheme;
@@ -83,10 +91,14 @@ if (!Number.isNaN(savedTheme) && savedTheme >= 0 && savedTheme < themes.length) 
 
 applyTheme(themeIndex);
 window.addEventListener("scroll", syncHeader, { passive: true });
-themeButton?.addEventListener("click", nextTheme);
+themeButtons.forEach((button) => {
+  button.addEventListener("click", nextTheme);
+});
 filterButtons.forEach((button) => {
   button.addEventListener("click", () => filterProjects(button.dataset.filter));
 });
 setupReveal();
 setupCursorShade();
 syncHeader();
+window.addEventListener("load", () => window.setTimeout(finishLoading, 720), { once: true });
+window.setTimeout(finishLoading, 2200);
