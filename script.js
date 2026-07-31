@@ -19,13 +19,16 @@ const prefersDarkMode = window.matchMedia("(prefers-color-scheme: dark)");
 let themeIndex = 0;
 let colorMode = "dark";
 let toastTimeout = 0;
-let pointerFrame = 0;
-let pointerX = window.innerWidth / 2;
-let pointerY = window.innerHeight / 2;
+let scrollFrame = 0;
+let headerScrolled = false;
+let activeSectionId = "";
 
 function syncHeader() {
   if (!header) return;
-  header.classList.toggle("is-scrolled", window.scrollY > 12);
+  const shouldBeScrolled = window.scrollY > 12;
+  if (headerScrolled === shouldBeScrolled) return;
+  headerScrolled = shouldBeScrolled;
+  header.classList.toggle("is-scrolled", shouldBeScrolled);
 }
 
 function applyTheme(index) {
@@ -103,6 +106,9 @@ function setupReveal() {
 }
 
 function setActiveSection(id) {
+  if (activeSectionId === id) return;
+  activeSectionId = id;
+
   sectionLinks.forEach((link) => {
     const isActive = link.getAttribute("href") === `#${id}`;
     link.classList.toggle("is-active", isActive);
@@ -135,6 +141,17 @@ function syncActiveSection() {
   setActiveSection(current.id);
 }
 
+function syncPageState() {
+  syncHeader();
+  syncActiveSection();
+  scrollFrame = 0;
+}
+
+function requestPageStateSync() {
+  if (scrollFrame) return;
+  scrollFrame = window.requestAnimationFrame(syncPageState);
+}
+
 function setupAnchorScroll() {
   document.querySelectorAll('a[href^="#"]').forEach((link) => {
     link.addEventListener("click", (event) => {
@@ -150,27 +167,6 @@ function setupAnchorScroll() {
       setActiveSection(target.id);
     });
   });
-}
-
-function setupPointerGlow() {
-  if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
-
-  window.addEventListener("pointermove", (event) => {
-    pointerX = event.clientX;
-    pointerY = event.clientY;
-    document.body.classList.add("is-pointer-active");
-
-    if (pointerFrame) return;
-    pointerFrame = window.requestAnimationFrame(() => {
-      document.documentElement.style.setProperty("--pointer-x", `${pointerX}px`);
-      document.documentElement.style.setProperty("--pointer-y", `${pointerY}px`);
-      pointerFrame = 0;
-    });
-  }, { passive: true });
-
-  window.addEventListener("pointerleave", () => {
-    document.body.classList.remove("is-pointer-active");
-  }, { passive: true });
 }
 
 function finishLoading() {
@@ -194,8 +190,8 @@ if (savedMode === "dark" || savedMode === "light") {
 
 applyTheme(themeIndex);
 applyColorMode(colorMode);
-window.addEventListener("scroll", syncHeader, { passive: true });
-window.addEventListener("scroll", syncActiveSection, { passive: true });
+window.addEventListener("scroll", requestPageStateSync, { passive: true });
+window.addEventListener("resize", requestPageStateSync, { passive: true });
 if (modeSwitch) {
   modeSwitch.addEventListener("click", nextColorMode);
 }
@@ -207,8 +203,6 @@ filterButtons.forEach((button) => {
 });
 setupAnchorScroll();
 setupReveal();
-setupPointerGlow();
-syncHeader();
-syncActiveSection();
+syncPageState();
 window.addEventListener("load", () => window.setTimeout(finishLoading, 720), { once: true });
 window.setTimeout(finishLoading, 2200);
