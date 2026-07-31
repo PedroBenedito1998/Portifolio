@@ -1,14 +1,21 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 92 144">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 92 144" shape-rendering="crispEdges">
   <defs>
-    <linearGradient id="wood" x1="0" y1="0" x2="1" y2="1">
-      <stop stop-color="#8b5931"/>
-      <stop offset="0.5" stop-color="#4b2d1f"/>
-      <stop offset="1" stop-color="#21130f"/>
+    <linearGradient id="woodBody" x1="22" y1="5" x2="70" y2="138" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#b97b42"/>
+      <stop offset=".38" stop-color="#6d4226"/>
+      <stop offset=".72" stop-color="#3d2419"/>
+      <stop offset="1" stop-color="#1b100d"/>
     </linearGradient>
   </defs>
-  <path fill="#120b0b" opacity=".32" d="M19 133c13 7 43 7 56 0v8H19z"/>
-  <rect x="25" y="7" width="42" height="128" rx="20" fill="url(#wood)" stroke="#130b0a" stroke-width="6"/>
-  <path fill="none" stroke="#b77a43" stroke-width="4" stroke-linecap="round" d="M37 20c20 14-16 29 18 44M37 79c28 10-12 24 15 39"/>
-  <path fill="#2d1712" d="M14 50h64v14H14zm0 43h64v14H14z"/>
-  <path fill="#e0c58b" d="M24 49h8v16h-8zm36 0h8v16h-8zm-36 43h8v16h-8zm36 0h8v16h-8z"/>
+  <path fill="#120b0b" opacity=".36" d="M16 132h61l10 8H8z"/>
+  <rect x="23" y="6" width="46" height="129" rx="18" fill="url(#woodBody)" stroke="#110908" stroke-width="6"/>
+  <path fill="#e3a862" opacity=".55" d="M33 14h14v114H33z"/>
+  <path fill="#2a160f" opacity=".48" d="M55 10h8v118h-8z"/>
+  <path fill="none" stroke="#2b1710" stroke-width="4" stroke-linecap="square" d="M38 24h15v9H41v14h17m-18 26c18 7-7 25 15 37"/>
+  <path fill="none" stroke="#c98a4e" stroke-width="3" stroke-linecap="square" opacity=".78" d="M35 19c19 10-13 29 20 42M37 81c26 7-9 24 15 38"/>
+  <path fill="#26110d" stroke="#110908" stroke-width="4" d="M12 49h68v16H12zm0 43h68v16H12z"/>
+  <path fill="#d6b06d" d="M21 48h9v18h-9zm42 0h9v18h-9zm-42 43h9v18h-9zm42 0h9v18h-9z"/>
+  <path fill="#f1cf8f" opacity=".65" d="M23 52h7v4h-7zm42 43h7v4h-7z"/>
+  <rect x="39" y="36" width="12" height="8" fill="#25130d"/>
+  <rect x="43" y="38" width="5" height="4" fill="#986033"/>
 </svg>

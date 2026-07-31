@@ -1,15 +1,27 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 92">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 92" shape-rendering="crispEdges">
   <defs>
-    <linearGradient id="wing" x1="0" y1="0" x2="1" y2="1">
-      <stop stop-color="#202636"/>
-      <stop offset="1" stop-color="#030408"/>
+    <linearGradient id="crowWing" x1="5" y1="12" x2="137" y2="82" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2f3850"/>
+      <stop offset=".45" stop-color="#111827"/>
+      <stop offset="1" stop-color="#020308"/>
+    </linearGradient>
+    <linearGradient id="crowFeather" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#4a5b7c"/>
+      <stop offset="1" stop-color="#05070d"/>
     </linearGradient>
   </defs>
-  <path fill="#05060b" opacity=".28" d="M42 72c23 7 48 7 69 0 8 0 16 4 25 9-37 9-78 9-115 0 8-5 15-8 21-9z"/>
-  <path fill="url(#wing)" d="M66 45C42 18 19 13 3 17c15 9 28 22 38 38-14-5-27-6-39-3 20 17 43 22 68 15z"/>
-  <path fill="url(#wing)" d="M82 45c24-27 47-32 63-28-15 9-28 22-38 38 14-5 27-6 39-3-20 17-43 22-68 15z"/>
-  <path fill="#0b0d15" stroke="#262b3e" stroke-width="4" d="M49 41c12-13 39-13 51 0 2 19-10 33-25 33S48 60 49 41z"/>
-  <path fill="#ffe8a0" d="M95 44h26l-24 13z"/>
-  <circle cx="88" cy="43" r="4" fill="#b8e4ff"/>
+  <path fill="#05060b" opacity=".24" d="M38 74c25 7 55 7 77 0 8 1 16 4 25 9-39 9-84 9-125 0 8-5 16-8 23-9z"/>
+  <path fill="url(#crowWing)" stroke="#04060c" stroke-width="3" d="M66 45C42 16 19 10 3 15c16 8 31 22 42 41-17-7-31-8-43-4 21 18 46 24 72 16z"/>
+  <path fill="url(#crowWing)" stroke="#04060c" stroke-width="3" d="M82 45c25-29 50-35 65-30-16 8-31 22-42 41 17-7 31-8 43-4-21 18-46 24-72 16z"/>
+  <path fill="url(#crowFeather)" d="M18 22c13 9 24 20 32 35l-13-4c-5-13-12-23-19-31zm114 0c-13 9-24 20-32 35l13-4c5-13 12-23 19-31z"/>
+  <path fill="#0b0d15" stroke="#293147" stroke-width="4" d="M49 41c12-13 39-13 51 0 2 19-10 33-25 33S48 60 49 41z"/>
+  <path fill="#141a2a" d="M57 45h38v16H57z"/>
+  <path fill="#56698e" opacity=".55" d="M58 42h26l-13 10z"/>
+  <path fill="#ffe8a0" stroke="#110908" stroke-width="2" d="M95 44h27l-25 14z"/>
+  <circle cx="88" cy="43" r="5" fill="#aee7ff"/>
+  <rect x="88" y="42" width="3" height="3" fill="#061019"/>
   <path fill="#151928" d="M63 73h24l-13 16z"/>
+  <path fill="none" stroke="#6c7ea5" stroke-width="3" stroke-linecap="square" opacity=".65" d="M36 33h17m44 0h17M62 63h25"/>
+  <rect x="26" y="62" width="11" height="5" fill="#3c4968"/>
+  <rect x="113" y="62" width="11" height="5" fill="#3c4968"/>
 </svg>
