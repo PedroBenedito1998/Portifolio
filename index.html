@@ -117,7 +117,7 @@
           </article>
           <article class="skill-card">
             <h3>Web e mobile</h3>
-            <p>Contato com HTML, CSS, JavaScript, frameworks, Node.js e Kotlin durante projetos acadêmicos e estudos práticos.</p>
+            <p>Contato com HTML, CSS, JavaScript, frameworks, Node.js, React Native e Kotlin durante projetos acadêmicos e estudos práticos.</p>
           </article>
           <article class="skill-card">
             <h3>Java, backend e dados</h3>
@@ -308,6 +308,46 @@
               <a class="button small" href="games/memoria/index.html">Jogar</a>
             </div>
           </article>
+
+          <article class="game-tile neo-geo-tile reveal-card" data-project-card data-kind="game">
+            <div class="game-cover neo-geo-cover">
+              <svg class="game-symbol arcade-symbol" viewBox="0 0 240 150" aria-hidden="true">
+                <rect class="arcade-cabinet" x="56" y="18" width="128" height="112" rx="16" />
+                <rect class="arcade-screen" x="74" y="34" width="92" height="52" rx="8" />
+                <path class="arcade-glow" d="M86 60h68" />
+                <circle class="arcade-button" cx="100" cy="104" r="8" />
+                <circle class="arcade-button accent-dot" cx="124" cy="104" r="8" />
+                <circle class="arcade-button" cx="148" cy="104" r="8" />
+                <path class="arcade-stick" d="M84 108v-20m0 0l-12-8m12 8l12-8" />
+                <path class="arcade-base" d="M48 132h144" />
+              </svg>
+            </div>
+            <div class="game-tile-body">
+              <h3>KOF 98 NeoGeo</h3>
+              <p>Experimento com jogo arcade incorporado no navegador para testar emulação web em desktop.</p>
+              <div class="project-notes">
+                <span>Iframe</span>
+                <span>Arcade</span>
+                <span>Desktop</span>
+              </div>
+              <a class="button small" href="#kof98">Abrir</a>
+            </div>
+          </article>
+        </div>
+
+        <div class="arcade-embed reveal-card" id="kof98" data-project-card data-kind="game">
+          <div class="arcade-embed-info">
+            <p class="project-tag">NeoGeo no navegador</p>
+            <h3>The King of Fighters 98</h3>
+            <p>
+              Incorporação externa para testar como emuladores arcade se comportam em uma página web.
+              Disponível apenas em telas de desktop para preservar desempenho e layout.
+            </p>
+          </div>
+          <div class="arcade-frame" aria-label="Emulador incorporado de The King of Fighters 98">
+            <iframe src="https://classicjoy.games/embed?slug=the-king-of-fighters-98" width="800" height="600" frameborder="0" allowfullscreen loading="lazy"></iframe>
+          </div>
+          <p class="arcade-mobile-note">Este experimento fica disponível apenas no desktop.</p>
         </div>
       </div>
     </section>
