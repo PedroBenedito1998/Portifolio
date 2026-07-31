@@ -53,10 +53,10 @@ const obstacleTypes = [
   },
   {
     src: "assets/obstacles/crow.svg",
-    width: 78,
-    height: 48,
+    width: 96,
+    height: 58,
     yOffset: 140,
-    hitbox: { x: 14, y: 18, width: 50, height: 22 }
+    hitbox: { x: 20, y: 20, width: 58, height: 24 }
   }
 ];
 
@@ -108,7 +108,7 @@ const maxFallSpeed = 12.4;
 const runFrameMs = 82;
 const attackCooldownMs = 1000;
 const sceneLength = 17000;
-const sceneTransition = 3600;
+const sceneTransition = 2600;
 
 const scenes = [
   {
@@ -145,7 +145,7 @@ const scenes = [
     accent: "rgba(92, 213, 255, 0.22)"
   },
   {
-    name: "city",
+    name: "village",
     sky: ["#100c18", "#231a31", "#0b0710"],
     grass: "#2c2d21",
     grassDark: "#171811",
@@ -607,8 +607,9 @@ function getSceneState() {
 }
 
 function drawStars(alpha) {
-  ctx.fillStyle = `rgba(255, 255, 255, ${0.06 * alpha})`;
   for (let i = 0; i < 42; i += 1) {
+    const pulse = 0.045 + Math.sin(distance * 0.004 + i * 1.7) * 0.025;
+    ctx.fillStyle = `rgba(255, 255, 255, ${pulse * alpha})`;
     const x = (i * 83 + Math.floor(distance * 0.012)) % canvas.width;
     const y = 22 + (i * 41) % 135;
     ctx.fillRect(x, y, i % 5 === 0 ? 3 : 2, i % 5 === 0 ? 3 : 2);
@@ -616,94 +617,234 @@ function drawStars(alpha) {
 }
 
 function drawMoon(scene, alpha) {
-  const x = scene.name === "city" ? 760 : 820;
+  const x = scene.name === "village" ? 760 : 820;
   const y = scene.name === "mountain-up" ? 62 : 72;
-  ctx.fillStyle = `rgba(190, 166, 255, ${0.14 * alpha})`;
+  ctx.fillStyle = `rgba(190, 166, 255, ${0.11 * alpha})`;
   ctx.beginPath();
-  ctx.arc(x, y, 44, 0, Math.PI * 2);
+  ctx.arc(x, y, 58, 0, Math.PI * 2);
   ctx.fill();
 
   ctx.fillStyle = `rgba(232, 213, 255, ${0.45 * alpha})`;
   ctx.beginPath();
   ctx.arc(x + 18, y - 10, 30, 0, Math.PI * 2);
   ctx.fill();
+
+  ctx.fillStyle = `rgba(43, 32, 76, ${0.22 * alpha})`;
+  ctx.beginPath();
+  ctx.arc(x + 31, y - 12, 24, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.fillStyle = `rgba(255, 241, 209, ${0.32 * alpha})`;
+  ctx.fillRect(x + 4, y + 19, 12, 3);
+  ctx.fillRect(x + 22, y + 6, 8, 2);
 }
 
 function drawMountainRange(alpha, direction = 1) {
-  ctx.fillStyle = `rgba(7, 10, 18, ${0.52 * alpha})`;
-  ctx.beginPath();
-  ctx.moveTo(0, 272);
-  for (let x = 0; x <= canvas.width + 160; x += 96) {
-    const peak = 94 + ((x / 96) % 3) * 22;
-    ctx.lineTo(x + 44, peak + direction * 10);
-    ctx.lineTo(x + 96, 272);
-  }
-  ctx.lineTo(canvas.width, 330);
-  ctx.lineTo(0, 330);
-  ctx.closePath();
-  ctx.fill();
+  const layers = [
+    { base: 286, step: 132, peak: 112, color: `rgba(18, 22, 34, ${0.34 * alpha})`, speed: 0.018 },
+    { base: 276, step: 96, peak: 94, color: `rgba(7, 10, 18, ${0.58 * alpha})`, speed: 0.032 }
+  ];
 
-  ctx.fillStyle = `rgba(204, 216, 234, ${0.18 * alpha})`;
-  for (let x = -60; x < canvas.width + 120; x += 138) {
+  layers.forEach((layer, layerIndex) => {
+    const offset = -((distance * layer.speed) % layer.step);
+    ctx.fillStyle = layer.color;
     ctx.beginPath();
-    ctx.moveTo(x + 86, 105 + direction * 8);
-    ctx.lineTo(x + 106, 144);
-    ctx.lineTo(x + 66, 144);
+    ctx.moveTo(0, layer.base);
+    for (let x = offset - layer.step; x <= canvas.width + layer.step * 2; x += layer.step) {
+      const peak = layer.peak + ((x / layer.step + layerIndex) % 3) * 22;
+      ctx.lineTo(x + layer.step * 0.48, peak + direction * 10);
+      ctx.lineTo(x + layer.step, layer.base);
+    }
+    ctx.lineTo(canvas.width, 330);
+    ctx.lineTo(0, 330);
     ctx.closePath();
     ctx.fill();
+
+    ctx.fillStyle = `rgba(224, 233, 248, ${0.13 * alpha})`;
+    for (let x = offset - 70; x < canvas.width + 170; x += layer.step * 1.35) {
+      ctx.beginPath();
+      ctx.moveTo(x + layer.step * 0.56, layer.peak + direction * 8);
+      ctx.lineTo(x + layer.step * 0.72, layer.peak + 43);
+      ctx.lineTo(x + layer.step * 0.42, layer.peak + 43);
+      ctx.closePath();
+      ctx.fill();
+    }
+  });
+
+  ctx.fillStyle = `rgba(216, 230, 255, ${0.08 * alpha})`;
+  for (let y = 180; y < 260; y += 26) {
+    ctx.fillRect(-60 + ((distance * 0.025 + y * 2) % 180), y, 120, 4);
+    ctx.fillRect(390 - ((distance * 0.018 + y) % 210), y + 9, 156, 3);
   }
 }
 
-function drawCity(alpha) {
-  const offset = -((distance * 0.06) % 180);
-  ctx.fillStyle = `rgba(15, 8, 12, ${0.76 * alpha})`;
-  for (let x = offset - 180; x < canvas.width + 220; x += 180) {
-    ctx.fillRect(x + 20, 176, 118, 94);
+function drawVillage(alpha) {
+  const offset = -((distance * 0.07) % 220);
+  const groundLine = 282;
+
+  ctx.fillStyle = `rgba(13, 8, 15, ${0.40 * alpha})`;
+  for (let x = -80 - ((distance * 0.025) % 120); x < canvas.width + 120; x += 120) {
     ctx.beginPath();
-    ctx.moveTo(x, 176);
-    ctx.lineTo(x + 80, 128);
-    ctx.lineTo(x + 160, 176);
+    ctx.moveTo(x, groundLine + 8);
+    ctx.lineTo(x + 58, groundLine - 88);
+    ctx.lineTo(x + 120, groundLine + 8);
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  for (let x = offset - 220; x < canvas.width + 260; x += 220) {
+    const baseY = groundLine + ((x / 220) % 2) * 8;
+    const bodyX = x + 38;
+    const bodyW = 132;
+    const bodyH = 68;
+
+    ctx.fillStyle = `rgba(22, 13, 17, ${0.86 * alpha})`;
+    ctx.fillRect(bodyX, baseY - bodyH, bodyW, bodyH);
+
+    ctx.fillStyle = `rgba(49, 29, 30, ${0.84 * alpha})`;
+    ctx.beginPath();
+    ctx.moveTo(bodyX - 20, baseY - bodyH + 4);
+    ctx.lineTo(bodyX + bodyW * 0.5, baseY - bodyH - 48);
+    ctx.lineTo(bodyX + bodyW + 20, baseY - bodyH + 4);
     ctx.closePath();
     ctx.fill();
 
-    ctx.fillStyle = `rgba(255, 177, 80, ${0.58 * alpha})`;
-    ctx.fillRect(x + 50, 204, 14, 18);
-    ctx.fillRect(x + 94, 204, 14, 18);
-    ctx.fillRect(x + 72, 238, 18, 28);
-    ctx.fillStyle = `rgba(15, 8, 12, ${0.76 * alpha})`;
+    ctx.fillStyle = `rgba(97, 48, 40, ${0.55 * alpha})`;
+    for (let tileX = bodyX - 8; tileX < bodyX + bodyW + 12; tileX += 18) {
+      ctx.fillRect(tileX, baseY - bodyH + 2, 13, 5);
+      ctx.fillRect(tileX + 7, baseY - bodyH - 8, 13, 4);
+    }
+
+    ctx.fillStyle = `rgba(246, 176, 82, ${0.45 * alpha})`;
+    ctx.fillRect(bodyX + 28, baseY - 48, 12, 17);
+    ctx.fillRect(bodyX + 92, baseY - 48, 12, 17);
+    ctx.fillRect(bodyX + 57, baseY - 28, 18, 28);
+
+    ctx.fillStyle = `rgba(51, 31, 24, ${0.82 * alpha})`;
+    ctx.fillRect(bodyX + 54, baseY - 28, 3, 28);
+    ctx.fillRect(bodyX + 75, baseY - 28, 3, 28);
+
+    ctx.fillStyle = `rgba(37, 20, 18, ${0.80 * alpha})`;
+    ctx.fillRect(bodyX - 32, baseY - 62, 7, 62);
+    ctx.fillRect(bodyX + bodyW + 25, baseY - 62, 7, 62);
+
+    ctx.fillStyle = `rgba(255, 177, 85, ${0.65 * alpha})`;
+    ctx.fillRect(bodyX - 39, baseY - 66, 21, 18);
+    ctx.fillRect(bodyX + bodyW + 18, baseY - 66, 21, 18);
+    ctx.fillStyle = `rgba(87, 42, 36, ${0.72 * alpha})`;
+    ctx.fillRect(bodyX - 43, baseY - 70, 29, 5);
+    ctx.fillRect(bodyX + bodyW + 14, baseY - 70, 29, 5);
   }
 
-  ctx.fillStyle = `rgba(255, 115, 87, ${0.72 * alpha})`;
-  for (let x = 40 - ((distance * 0.08) % 160); x < canvas.width + 160; x += 160) {
-    ctx.fillRect(x, 132, 18, 24);
-    ctx.fillRect(x + 4, 156, 10, 22);
-  }
+  ctx.strokeStyle = `rgba(255, 205, 120, ${0.16 * alpha})`;
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(0, groundLine - 8);
+  ctx.lineTo(canvas.width, groundLine - 20);
+  ctx.stroke();
 }
 
 function drawRiver(alpha) {
-  const wave = Math.sin(distance * 0.012) * 8;
-  ctx.fillStyle = `rgba(24, 142, 190, ${0.78 * alpha})`;
+  const wave = Math.sin(distance * 0.012) * 5;
+  ctx.fillStyle = `rgba(9, 54, 76, ${0.88 * alpha})`;
   ctx.beginPath();
-  ctx.moveTo(0, 255 + wave);
-  ctx.bezierCurveTo(240, 218, 338, 302, 544, 260);
-  ctx.bezierCurveTo(725, 224, 818, 284, 960, 246);
-  ctx.lineTo(960, 314);
-  ctx.bezierCurveTo(710, 345, 480, 292, 235, 330);
-  ctx.bezierCurveTo(102, 350, 42, 320, 0, 338);
+  ctx.moveTo(0, 250 + wave);
+  ctx.bezierCurveTo(190, 232, 338, 276, 514, 252);
+  ctx.bezierCurveTo(682, 229, 804, 269, 960, 244);
+  ctx.lineTo(960, 356);
+  ctx.lineTo(0, 356);
   ctx.closePath();
   ctx.fill();
 
-  ctx.fillStyle = `rgba(203, 247, 255, ${0.48 * alpha})`;
-  for (let x = -80 + ((distance * 0.18) % 140); x < canvas.width + 120; x += 140) {
-    ctx.fillRect(x, 276 + Math.sin(x) * 8, 58, 4);
-    ctx.fillRect(x + 70, 296 + Math.cos(x) * 8, 38, 3);
+  const reflectionOffset = -((distance * 0.16) % 140);
+  ctx.fillStyle = `rgba(185, 235, 255, ${0.28 * alpha})`;
+  for (let x = reflectionOffset - 120; x < canvas.width + 160; x += 140) {
+    ctx.fillRect(x, 272 + Math.sin(x) * 6, 62, 3);
+    ctx.fillRect(x + 70, 302 + Math.cos(x) * 5, 44, 3);
+    ctx.fillRect(x + 24, 330, 34, 2);
+  }
+
+  ctx.fillStyle = `rgba(14, 30, 18, ${0.86 * alpha})`;
+  ctx.beginPath();
+  ctx.moveTo(0, 248);
+  ctx.bezierCurveTo(180, 236, 320, 262, 492, 244);
+  ctx.bezierCurveTo(680, 226, 810, 246, 960, 232);
+  ctx.lineTo(960, 254);
+  ctx.bezierCurveTo(746, 275, 546, 255, 340, 270);
+  ctx.bezierCurveTo(182, 282, 90, 260, 0, 274);
+  ctx.closePath();
+  ctx.fill();
+
+  ctx.fillStyle = `rgba(92, 132, 78, ${0.26 * alpha})`;
+  for (let x = -20 + ((distance * 0.05) % 58); x < canvas.width + 80; x += 58) {
+    ctx.fillRect(x, 236 + (x % 4) * 4, 16, 5);
+    ctx.fillRect(x + 27, 246, 9, 4);
+  }
+}
+
+function drawWoodenBridge(alpha) {
+  const deckY = groundY - 8;
+  const plankOffset = -((distance * 0.28) % 78);
+
+  ctx.fillStyle = `rgba(40, 22, 13, ${0.55 * alpha})`;
+  ctx.fillRect(0, deckY - 14, canvas.width, 22);
+
+  ctx.fillStyle = `rgba(94, 54, 28, ${0.96 * alpha})`;
+  ctx.fillRect(0, deckY + 4, canvas.width, canvas.height - deckY);
+
+  ctx.fillStyle = `rgba(152, 98, 49, ${0.86 * alpha})`;
+  for (let x = plankOffset - 78; x < canvas.width + 90; x += 78) {
+    ctx.fillRect(x, deckY + 5, 68, 52);
+    ctx.fillStyle = `rgba(61, 35, 22, ${0.68 * alpha})`;
+    ctx.fillRect(x + 62, deckY + 5, 4, 52);
+    ctx.fillRect(x + 8, deckY + 22, 28, 3);
+    ctx.fillRect(x + 36, deckY + 42, 20, 3);
+    ctx.fillStyle = `rgba(152, 98, 49, ${0.86 * alpha})`;
+  }
+
+  ctx.fillStyle = `rgba(43, 24, 16, ${0.92 * alpha})`;
+  ctx.fillRect(0, deckY - 10, canvas.width, 6);
+  ctx.fillRect(0, deckY + 54, canvas.width, 7);
+
+  ctx.fillStyle = `rgba(32, 18, 12, ${0.88 * alpha})`;
+  for (let x = plankOffset - 40; x < canvas.width + 90; x += 78) {
+    ctx.fillRect(x, deckY - 38, 8, 50);
+    ctx.fillRect(x + 4, deckY - 42, 18, 8);
+  }
+
+  ctx.strokeStyle = `rgba(104, 65, 35, ${0.80 * alpha})`;
+  ctx.lineWidth = 5;
+  ctx.beginPath();
+  ctx.moveTo(0, deckY - 30);
+  ctx.lineTo(canvas.width, deckY - 22);
+  ctx.stroke();
+}
+
+function drawRiverBackline(scene, alpha) {
+  const offset = -((distance * 0.045) % 86);
+  ctx.fillStyle = scene.treeFar.replace(/[\d.]+\)$/u, `${0.72 * alpha})`);
+  for (let x = offset - 86; x < canvas.width + 100; x += 86) {
+    const base = 252 + ((x / 86) % 2) * 7;
+    ctx.fillRect(x + 38, base - 62, 9, 62);
+    ctx.beginPath();
+    ctx.moveTo(x, base);
+    ctx.lineTo(x + 43, base - 116);
+    ctx.lineTo(x + 86, base);
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  ctx.fillStyle = `rgba(110, 154, 97, ${0.10 * alpha})`;
+  for (let x = offset - 50; x < canvas.width + 90; x += 74) {
+    ctx.fillRect(x + 28, 190, 24, 4);
+    ctx.fillRect(x + 18, 222, 30, 3);
   }
 }
 
 function drawTrees(scene, alpha) {
   const layers = [
-    { y: 248, height: 118, gap: 92, speed: 0.08, color: scene.treeFar },
-    { y: 288, height: 96, gap: 74, speed: 0.14, color: scene.treeNear }
+    { y: 244, height: 132, gap: 100, speed: 0.07, color: scene.treeFar, trunk: "rgba(30, 19, 13, 0.55)" },
+    { y: 290, height: 112, gap: 76, speed: 0.14, color: scene.treeNear, trunk: "rgba(39, 24, 15, 0.74)" }
   ];
 
   layers.forEach((layer) => {
@@ -711,8 +852,12 @@ function drawTrees(scene, alpha) {
     ctx.fillStyle = layer.color.replace(/[\d.]+\)$/u, `${alpha})`);
     for (let x = offset - layer.gap; x < canvas.width + layer.gap; x += layer.gap) {
       const trunkX = x + layer.gap * 0.42;
-      const trunkW = 10;
+      const trunkW = layer.gap > 90 ? 9 : 12;
+      ctx.fillStyle = layer.trunk.replace(/[\d.]+\)$/u, `${alpha})`);
       ctx.fillRect(trunkX, layer.y - layer.height * 0.42, trunkW, layer.height * 0.6);
+      ctx.fillRect(trunkX + trunkW - 2, layer.y - layer.height * 0.54, 4, layer.height * 0.32);
+
+      ctx.fillStyle = layer.color.replace(/[\d.]+\)$/u, `${alpha})`);
 
       ctx.beginPath();
       ctx.moveTo(x, layer.y);
@@ -727,6 +872,12 @@ function drawTrees(scene, alpha) {
       ctx.lineTo(x + layer.gap - 8, layer.y - layer.height * 0.28);
       ctx.closePath();
       ctx.fill();
+
+      ctx.fillStyle = `rgba(110, 156, 96, ${0.13 * alpha})`;
+      ctx.fillRect(x + layer.gap * 0.38, layer.y - layer.height * 0.72, 18, 4);
+      ctx.fillRect(x + layer.gap * 0.30, layer.y - layer.height * 0.46, 24, 3);
+      ctx.fillRect(x + layer.gap * 0.54, layer.y - layer.height * 0.55, 20, 3);
+      ctx.fillStyle = layer.color.replace(/[\d.]+\)$/u, `${alpha})`);
     }
   });
 }
@@ -740,6 +891,20 @@ function drawPetals(scene, alpha) {
     ctx.ellipse(x, y, 5, 2.5, 0.75, 0, Math.PI * 2);
     ctx.fill();
   }
+
+  ctx.save();
+  ctx.globalCompositeOperation = "lighter";
+  const glowCount = scene.name === "village" ? 4 : scene.name === "river" ? 7 : 12;
+  for (let i = 0; i < glowCount; i += 1) {
+    const x = canvas.width - ((distance * 0.025 + i * 91) % (canvas.width + 160));
+    const y = 92 + ((i * 47 + Math.sin(distance * 0.006 + i) * 20) % 180);
+    const light = 0.09 + Math.sin(distance * 0.01 + i) * 0.035;
+    ctx.fillStyle = `rgba(255, 208, 103, ${light * alpha})`;
+    ctx.fillRect(x, y, 4, 4);
+    ctx.fillStyle = `rgba(255, 208, 103, ${light * 0.22 * alpha})`;
+    ctx.fillRect(x - 6, y - 6, 16, 16);
+  }
+  ctx.restore();
 }
 
 function drawGround(scene, alpha, sceneIndex) {
@@ -752,6 +917,8 @@ function drawGround(scene, alpha, sceneIndex) {
 
   if (scene.name === "river") {
     drawRiver(alpha);
+    drawWoodenBridge(alpha);
+    return;
   }
 
   const pathOffset = -((distance * 0.22) % 120);
@@ -770,12 +937,127 @@ function drawGround(scene, alpha, sceneIndex) {
     ctx.fillRect(x + 72, groundY + 58, 28, 4);
   }
 
+  ctx.fillStyle = `rgba(28, 19, 14, ${0.34 * alpha})`;
+  for (let x = pathOffset - 120; x < canvas.width + 120; x += 34) {
+    ctx.fillRect(x, groundY + 26 + ((x + sceneIndex) % 4) * 8, 8, 4);
+    ctx.fillRect(x + 16, groundY + 48 + ((x + sceneIndex) % 3) * 7, 5, 3);
+  }
+
   ctx.fillStyle = `rgba(15, 28, 17, ${0.42 * alpha})`;
   for (let x = pathOffset - 80; x < canvas.width + 100; x += 42) {
     ctx.fillRect(x, groundY - 8, 5, 18);
     ctx.fillRect(x + 12, groundY - 2, 4, 14);
     ctx.fillRect(x + 27, groundY - 7, 4, 17);
   }
+
+  ctx.fillStyle = `rgba(176, 228, 116, ${0.12 * alpha})`;
+  for (let x = -20 + ((distance * 0.34) % 58); x < canvas.width + 60; x += 58) {
+    ctx.fillRect(x, groundY + 6, 14, 3);
+    ctx.fillRect(x + 25, groundY + 2, 8, 4);
+  }
+}
+
+function drawCrowObstacle(obstacle) {
+  const bob = obstacle.floatY || 0;
+  const wing = Math.sin(distance * 0.09 + obstacle.phase);
+  const tilt = Math.sin(distance * 0.026 + obstacle.phase) * 0.08;
+  const x = obstacle.x + obstacle.width * 0.5;
+  const y = obstacle.y + bob + obstacle.height * 0.5;
+  const scale = obstacle.width / 150;
+  const wingLift = wing * 16;
+
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.rotate(tilt);
+  ctx.scale(scale, scale);
+
+  ctx.fillStyle = "rgba(0, 0, 0, 0.26)";
+  ctx.beginPath();
+  ctx.ellipse(0, 28, 54, 9, 0, 0, Math.PI * 2);
+  ctx.fill();
+
+  const wingGradient = ctx.createLinearGradient(-70, -28, 70, 34);
+  wingGradient.addColorStop(0, "#4d638a");
+  wingGradient.addColorStop(0.42, "#172032");
+  wingGradient.addColorStop(1, "#03050a");
+  ctx.fillStyle = wingGradient;
+  ctx.strokeStyle = "#050711";
+  ctx.lineWidth = 3;
+
+  ctx.beginPath();
+  ctx.moveTo(-10, -4);
+  ctx.lineTo(-74, -14 - wingLift);
+  ctx.lineTo(-58, 12 - wingLift * 0.25);
+  ctx.lineTo(-36, 22 + wingLift * 0.20);
+  ctx.lineTo(-14, 10);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.moveTo(12, -4);
+  ctx.lineTo(74, -14 - wingLift);
+  ctx.lineTo(58, 12 - wingLift * 0.25);
+  ctx.lineTo(36, 22 + wingLift * 0.20);
+  ctx.lineTo(14, 10);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+
+  ctx.strokeStyle = "rgba(117, 147, 196, 0.58)";
+  ctx.lineWidth = 2;
+  for (let i = 0; i < 4; i += 1) {
+    ctx.beginPath();
+    ctx.moveTo(-18, 0 + i * 4);
+    ctx.lineTo(-62 + i * 10, -11 - wingLift * 0.72 + i * 7);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(18, 0 + i * 4);
+    ctx.lineTo(62 - i * 10, -11 - wingLift * 0.72 + i * 7);
+    ctx.stroke();
+  }
+
+  ctx.fillStyle = "#0c111d";
+  ctx.strokeStyle = "#32415e";
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.ellipse(0, 3, 25, 20, 0, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.stroke();
+
+  ctx.fillStyle = "#171f31";
+  ctx.beginPath();
+  ctx.ellipse(-6, -1, 20, 11, 0, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.fillStyle = "#111827";
+  ctx.beginPath();
+  ctx.arc(21, -4, 13, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.fillStyle = "#ffd98d";
+  ctx.beginPath();
+  ctx.moveTo(32, -6);
+  ctx.lineTo(54, -1);
+  ctx.lineTo(32, 6);
+  ctx.closePath();
+  ctx.fill();
+
+  ctx.fillStyle = "#bff1ff";
+  ctx.fillRect(23, -9, 5, 5);
+  ctx.fillStyle = "#031018";
+  ctx.fillRect(25, -8, 2, 2);
+
+  ctx.fillStyle = "#111827";
+  ctx.beginPath();
+  ctx.moveTo(-20, 12);
+  ctx.lineTo(-36, 31);
+  ctx.lineTo(-7, 23);
+  ctx.closePath();
+  ctx.fill();
+
+  ctx.restore();
 }
 
 function drawScene(sceneIndex, alpha) {
@@ -796,9 +1078,13 @@ function drawScene(sceneIndex, alpha) {
   if (scene.name === "mountain-up" || scene.name === "mountain-down") {
     drawMountainRange(alpha, scene.name === "mountain-up" ? 1 : -1);
     drawTrees(scene, alpha * 0.6);
-  } else if (scene.name === "city") {
-    drawMountainRange(alpha * 0.25, -1);
-    drawCity(alpha);
+  } else if (scene.name === "river") {
+    drawMountainRange(alpha * 0.22, -1);
+    drawRiverBackline(scene, alpha);
+  } else if (scene.name === "village") {
+    drawMountainRange(alpha * 0.22, -1);
+    drawRiverBackline(scene, alpha * 0.45);
+    drawVillage(alpha);
   } else {
     drawTrees(scene, alpha);
   }
@@ -834,6 +1120,11 @@ function drawPlayer() {
 
 function drawObstacles() {
   obstacles.forEach((obstacle) => {
+    if (obstacle.typeIndex === 2) {
+      drawCrowObstacle(obstacle);
+      return;
+    }
+
     const image = obstacleImages[obstacle.typeIndex];
     drawImageSafe(image, obstacle.x, obstacle.y + (obstacle.floatY || 0), obstacle.width, obstacle.height);
   });
