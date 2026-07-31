@@ -108,7 +108,7 @@ const maxFallSpeed = 12.4;
 const runFrameMs = 82;
 const attackCooldownMs = 1000;
 const sceneLength = 17000;
-const sceneTransition = 2600;
+const sceneTransition = 1000;
 
 const scenes = [
   {
@@ -123,18 +123,18 @@ const scenes = [
     accent: "rgba(203, 166, 255, 0.22)"
   },
   {
-    name: "mountain-up",
-    sky: ["#0a1022", "#172446", "#0a130f"],
-    grass: "#27391f",
-    grassDark: "#172211",
-    path: "#6a5234",
-    pathLight: "#b18b58",
-    treeNear: "rgba(11, 25, 18, 0.78)",
-    treeFar: "rgba(9, 13, 22, 0.82)",
-    accent: "rgba(188, 214, 255, 0.18)"
+    name: "forest-bridge",
+    sky: ["#08101f", "#13213a", "#06110c"],
+    grass: "#25442a",
+    grassDark: "#102518",
+    path: "#654526",
+    pathLight: "#aa7842",
+    treeNear: "rgba(7, 25, 16, 0.84)",
+    treeFar: "rgba(5, 16, 20, 0.70)",
+    accent: "rgba(203, 166, 255, 0.20)"
   },
   {
-    name: "river",
+    name: "bridge",
     sky: ["#071526", "#102f45", "#06130f"],
     grass: "#1f4429",
     grassDark: "#0d2516",
@@ -143,6 +143,17 @@ const scenes = [
     treeNear: "rgba(8, 30, 24, 0.82)",
     treeFar: "rgba(5, 18, 24, 0.76)",
     accent: "rgba(92, 213, 255, 0.22)"
+  },
+  {
+    name: "bridge-village",
+    sky: ["#100c18", "#231a31", "#0b0710"],
+    grass: "#2c2d21",
+    grassDark: "#171811",
+    path: "#5a4638",
+    pathLight: "#b99068",
+    treeNear: "rgba(28, 15, 20, 0.78)",
+    treeFar: "rgba(12, 8, 14, 0.76)",
+    accent: "rgba(255, 181, 100, 0.20)"
   },
   {
     name: "village",
@@ -156,14 +167,14 @@ const scenes = [
     accent: "rgba(255, 181, 100, 0.20)"
   },
   {
-    name: "mountain-down",
-    sky: ["#0b1224", "#18243e", "#07110c"],
-    grass: "#223b21",
-    grassDark: "#102416",
-    path: "#60472e",
-    pathLight: "#aa8153",
-    treeNear: "rgba(8, 24, 16, 0.86)",
-    treeFar: "rgba(5, 14, 18, 0.78)",
+    name: "village-forest",
+    sky: ["#0b1020", "#18213a", "#061009"],
+    grass: "#243e23",
+    grassDark: "#102317",
+    path: "#604329",
+    pathLight: "#ad8052",
+    treeNear: "rgba(8, 24, 16, 0.84)",
+    treeFar: "rgba(5, 14, 18, 0.76)",
     accent: "rgba(203, 166, 255, 0.18)"
   }
 ];
@@ -617,8 +628,8 @@ function drawStars(alpha) {
 }
 
 function drawMoon(scene, alpha) {
-  const x = scene.name === "village" ? 760 : 820;
-  const y = scene.name === "mountain-up" ? 62 : 72;
+  const x = scene.name === "village" || scene.name === "bridge-village" ? 760 : 820;
+  const y = scene.name === "forest-bridge" ? 66 : 72;
   ctx.fillStyle = `rgba(190, 166, 255, ${0.11 * alpha})`;
   ctx.beginPath();
   ctx.arc(x, y, 58, 0, Math.PI * 2);
@@ -676,6 +687,10 @@ function drawMountainRange(alpha, direction = 1) {
     ctx.fillRect(-60 + ((distance * 0.025 + y * 2) % 180), y, 120, 4);
     ctx.fillRect(390 - ((distance * 0.018 + y) % 210), y + 9, 156, 3);
   }
+}
+
+function isBridgeScene(scene) {
+  return scene.name === "bridge" || scene.name === "bridge-village";
 }
 
 function drawVillage(alpha) {
@@ -820,6 +835,97 @@ function drawWoodenBridge(alpha) {
   ctx.stroke();
 }
 
+function drawBridgeEntrance(alpha) {
+  const deckY = groundY - 7;
+  const plankOffset = -((distance * 0.26) % 74);
+
+  ctx.fillStyle = `rgba(24, 50, 34, ${0.36 * alpha})`;
+  ctx.fillRect(0, groundY - 18, canvas.width, 18);
+
+  ctx.fillStyle = `rgba(33, 19, 13, ${0.76 * alpha})`;
+  ctx.fillRect(0, deckY - 8, canvas.width, 9);
+
+  ctx.fillStyle = `rgba(113, 68, 34, ${0.82 * alpha})`;
+  for (let x = plankOffset - 74; x < canvas.width + 90; x += 74) {
+    const lifted = (x / 74) % 2 === 0 ? 0 : 3;
+    ctx.fillRect(x, deckY + 8 + lifted, 58, 36);
+    ctx.fillStyle = `rgba(56, 32, 20, ${0.60 * alpha})`;
+    ctx.fillRect(x + 52, deckY + 8 + lifted, 4, 36);
+    ctx.fillRect(x + 8, deckY + 22 + lifted, 24, 3);
+    ctx.fillStyle = `rgba(113, 68, 34, ${0.82 * alpha})`;
+  }
+
+  ctx.fillStyle = `rgba(16, 31, 20, ${0.82 * alpha})`;
+  for (let x = -20 + ((distance * 0.12) % 70); x < canvas.width + 80; x += 70) {
+    ctx.fillRect(x, deckY - 20, 7, 32);
+    ctx.beginPath();
+    ctx.moveTo(x - 12, deckY - 10);
+    ctx.lineTo(x + 4, deckY - 52);
+    ctx.lineTo(x + 20, deckY - 10);
+    ctx.closePath();
+    ctx.fill();
+  }
+}
+
+function drawBridgeVillageDetails(alpha) {
+  const deckY = groundY - 8;
+  const offset = -((distance * 0.25) % 142);
+
+  ctx.fillStyle = `rgba(38, 22, 15, ${0.88 * alpha})`;
+  for (let x = offset - 142; x < canvas.width + 170; x += 142) {
+    ctx.fillRect(x + 20, deckY - 46, 8, 54);
+    ctx.fillRect(x + 100, deckY - 42, 8, 50);
+
+    ctx.fillStyle = `rgba(212, 111, 66, ${0.70 * alpha})`;
+    ctx.fillRect(x + 12, deckY - 54, 24, 18);
+    ctx.fillRect(x + 92, deckY - 50, 24, 16);
+    ctx.fillStyle = `rgba(82, 39, 34, ${0.78 * alpha})`;
+    ctx.fillRect(x + 9, deckY - 58, 30, 5);
+    ctx.fillRect(x + 89, deckY - 54, 30, 5);
+
+    ctx.fillStyle = `rgba(255, 192, 98, ${0.22 * alpha})`;
+    ctx.fillRect(x + 10, deckY - 36, 28, 22);
+    ctx.fillRect(x + 90, deckY - 32, 28, 18);
+    ctx.fillStyle = `rgba(38, 22, 15, ${0.88 * alpha})`;
+  }
+
+  ctx.strokeStyle = `rgba(114, 72, 39, ${0.78 * alpha})`;
+  ctx.lineWidth = 4;
+  ctx.beginPath();
+  ctx.moveTo(0, deckY - 31);
+  ctx.lineTo(canvas.width, deckY - 24);
+  ctx.stroke();
+}
+
+function drawVillageForestDetails(alpha) {
+  const offset = -((distance * 0.11) % 112);
+  const groundLine = groundY + 4;
+
+  ctx.fillStyle = `rgba(54, 31, 24, ${0.62 * alpha})`;
+  for (let x = offset - 112; x < canvas.width + 130; x += 112) {
+    ctx.fillRect(x + 14, groundLine - 42, 8, 46);
+    ctx.fillRect(x + 62, groundLine - 38, 8, 42);
+    ctx.fillRect(x + 16, groundLine - 28, 54, 6);
+  }
+
+  ctx.fillStyle = `rgba(9, 27, 16, ${0.84 * alpha})`;
+  for (let x = offset - 70; x < canvas.width + 100; x += 88) {
+    ctx.fillRect(x + 38, groundLine - 70, 10, 70);
+    ctx.beginPath();
+    ctx.moveTo(x, groundLine - 4);
+    ctx.lineTo(x + 42, groundLine - 118);
+    ctx.lineTo(x + 88, groundLine - 4);
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  ctx.fillStyle = `rgba(177, 220, 125, ${0.12 * alpha})`;
+  for (let x = offset - 35; x < canvas.width + 90; x += 62) {
+    ctx.fillRect(x + 18, groundLine - 52, 24, 3);
+    ctx.fillRect(x + 10, groundLine - 25, 28, 3);
+  }
+}
+
 function drawRiverBackline(scene, alpha) {
   const offset = -((distance * 0.045) % 86);
   ctx.fillStyle = scene.treeFar.replace(/[\d.]+\)$/u, `${0.72 * alpha})`);
@@ -894,7 +1000,7 @@ function drawPetals(scene, alpha) {
 
   ctx.save();
   ctx.globalCompositeOperation = "lighter";
-  const glowCount = scene.name === "village" ? 4 : scene.name === "river" ? 7 : 12;
+  const glowCount = scene.name === "village" || scene.name === "bridge-village" ? 4 : scene.name === "bridge" ? 7 : 12;
   for (let i = 0; i < glowCount; i += 1) {
     const x = canvas.width - ((distance * 0.025 + i * 91) % (canvas.width + 160));
     const y = 92 + ((i * 47 + Math.sin(distance * 0.006 + i) * 20) % 180);
@@ -908,16 +1014,19 @@ function drawPetals(scene, alpha) {
 }
 
 function drawGround(scene, alpha, sceneIndex) {
-  const incline = scene.name === "mountain-up" ? -18 : scene.name === "mountain-down" ? 16 : 0;
+  const incline = scene.name === "forest-bridge" ? -8 : scene.name === "village-forest" ? 8 : 0;
   ctx.fillStyle = scene.grass;
   ctx.fillRect(0, groundY - 12, canvas.width, canvas.height - groundY + 12);
 
   ctx.fillStyle = scene.grassDark;
   ctx.fillRect(0, groundY + 54, canvas.width, 40);
 
-  if (scene.name === "river") {
+  if (isBridgeScene(scene)) {
     drawRiver(alpha);
     drawWoodenBridge(alpha);
+    if (scene.name === "bridge-village") {
+      drawBridgeVillageDetails(alpha);
+    }
     return;
   }
 
@@ -954,6 +1063,12 @@ function drawGround(scene, alpha, sceneIndex) {
   for (let x = -20 + ((distance * 0.34) % 58); x < canvas.width + 60; x += 58) {
     ctx.fillRect(x, groundY + 6, 14, 3);
     ctx.fillRect(x + 25, groundY + 2, 8, 4);
+  }
+
+  if (scene.name === "forest-bridge") {
+    drawBridgeEntrance(alpha);
+  } else if (scene.name === "village-forest") {
+    drawVillageForestDetails(alpha);
   }
 }
 
@@ -1104,16 +1219,24 @@ function drawScene(sceneIndex, alpha) {
   drawStars(alpha);
   drawMoon(scene, alpha);
 
-  if (scene.name === "mountain-up" || scene.name === "mountain-down") {
-    drawMountainRange(alpha, scene.name === "mountain-up" ? 1 : -1);
-    drawTrees(scene, alpha * 0.6);
-  } else if (scene.name === "river") {
+  if (scene.name === "forest-bridge") {
+    drawMountainRange(alpha * 0.18, -1);
+    drawRiverBackline(scene, alpha * 0.35);
+    drawTrees(scene, alpha * 0.88);
+  } else if (scene.name === "bridge") {
     drawMountainRange(alpha * 0.22, -1);
     drawRiverBackline(scene, alpha);
   } else if (scene.name === "village") {
     drawMountainRange(alpha * 0.22, -1);
-    drawRiverBackline(scene, alpha * 0.45);
     drawVillage(alpha);
+  } else if (scene.name === "bridge-village") {
+    drawMountainRange(alpha * 0.18, -1);
+    drawRiverBackline(scene, alpha * 0.40);
+    drawVillage(alpha * 0.82);
+  } else if (scene.name === "village-forest") {
+    drawMountainRange(alpha * 0.18, -1);
+    drawVillage(alpha * 0.50);
+    drawTrees(scene, alpha * 0.72);
   } else {
     drawTrees(scene, alpha);
   }
