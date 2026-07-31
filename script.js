@@ -18,6 +18,7 @@ const themeStorageKey = "portfolio-theme-index-v2";
 const modeStorageKey = "portfolio-color-mode-v1";
 const themes = ["", "violet", "red", "green", "blue"];
 const prefersDarkMode = window.matchMedia("(prefers-color-scheme: dark)");
+let faviconLink = document.querySelector('link[rel="icon"]');
 let themeIndex = 0;
 let colorMode = "dark";
 let toastTimeout = 0;
@@ -44,6 +45,30 @@ function writeStorage(key, value) {
   }
 }
 
+function syncFavicon() {
+  const styles = window.getComputedStyle(document.body);
+  const accent = styles.getPropertyValue("--accent").trim() || "#facc15";
+  const surface = colorMode === "light" ? "#f8fafc" : "#05070d";
+  const text = colorMode === "light" ? "#111827" : "#ffffff";
+  const svg = `
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+      <rect width="64" height="64" rx="18" fill="${surface}"/>
+      <circle cx="32" cy="32" r="27" fill="${surface}" stroke="${accent}" stroke-width="5"/>
+      <text x="32" y="39" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="800" fill="${text}">PB</text>
+      <circle cx="50" cy="14" r="5" fill="${accent}"/>
+    </svg>
+  `.trim();
+
+  if (!faviconLink) {
+    faviconLink = document.createElement("link");
+    faviconLink.rel = "icon";
+    document.head.appendChild(faviconLink);
+  }
+
+  faviconLink.type = "image/svg+xml";
+  faviconLink.href = `data:image/svg+xml,${encodeURIComponent(svg)}`;
+}
+
 function syncHeader() {
   if (!header) return;
   const shouldBeScrolled = window.scrollY > 12;
@@ -56,6 +81,7 @@ function applyTheme(index) {
   const theme = themes[index] || "";
   document.body.dataset.theme = theme;
   writeStorage(themeStorageKey, String(index));
+  syncFavicon();
 }
 
 function nextTheme() {
@@ -91,6 +117,7 @@ function applyColorMode(mode, shouldNotify = false) {
   if (shouldNotify) {
     showModeToast(isDark ? "Modo escuro ativado." : "Modo escuro desativado.");
   }
+  syncFavicon();
 }
 
 function nextColorMode() {
