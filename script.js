@@ -4,6 +4,9 @@ const modeSwitch = document.querySelector("[data-mode-switch]");
 const modeIcon = document.querySelector("[data-mode-icon]");
 const modeLabel = document.querySelector("[data-mode-label]");
 const modeToast = document.querySelector("[data-mode-toast]");
+const loader = document.querySelector("[data-loader]");
+const pointerGlow = document.querySelector("[data-pointer-glow]");
+const autoplayVideos = document.querySelectorAll("[data-autoplay-video]");
 const filterButtons = document.querySelectorAll("[data-filter]");
 const projectCards = document.querySelectorAll("[data-project-card]");
 const revealCards = document.querySelectorAll(".reveal-card");
@@ -21,6 +24,25 @@ let toastTimeout = 0;
 let scrollFrame = 0;
 let headerScrolled = false;
 let activeSectionId = "";
+let pointerFrame = 0;
+let pointerX = 0;
+let pointerY = 0;
+
+function readStorage(key) {
+  try {
+    return window.localStorage.getItem(key);
+  } catch (error) {
+    return null;
+  }
+}
+
+function writeStorage(key, value) {
+  try {
+    window.localStorage.setItem(key, value);
+  } catch (error) {
+    // Some browser privacy modes/extensions can block localStorage.
+  }
+}
 
 function syncHeader() {
   if (!header) return;
@@ -33,7 +55,7 @@ function syncHeader() {
 function applyTheme(index) {
   const theme = themes[index] || "";
   document.body.dataset.theme = theme;
-  localStorage.setItem(themeStorageKey, String(index));
+  writeStorage(themeStorageKey, String(index));
 }
 
 function nextTheme() {
@@ -54,7 +76,7 @@ function showModeToast(message) {
 function applyColorMode(mode, shouldNotify = false) {
   colorMode = mode === "light" ? "light" : "dark";
   document.body.dataset.mode = colorMode;
-  localStorage.setItem(modeStorageKey, colorMode);
+  writeStorage(modeStorageKey, colorMode);
 
   const isDark = colorMode === "dark";
   if (modeSwitch) {
@@ -151,12 +173,79 @@ function requestPageStateSync() {
   scrollFrame = window.requestAnimationFrame(syncPageState);
 }
 
-const savedTheme = Number(localStorage.getItem(themeStorageKey));
+function finishLoading() {
+  if (!loader) return;
+  loader.classList.add("is-hidden");
+  window.setTimeout(() => {
+    if (loader.parentNode) {
+      loader.remove();
+    }
+  }, 420);
+}
+
+function setupLoader() {
+  if (!loader) return;
+  window.setTimeout(finishLoading, 900);
+  window.setTimeout(finishLoading, 1800);
+}
+
+function setupPointerGlow() {
+  if (!pointerGlow) return;
+  if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  window.addEventListener("pointermove", (event) => {
+    pointerX = event.clientX;
+    pointerY = event.clientY;
+
+    if (pointerFrame) return;
+    pointerFrame = window.requestAnimationFrame(() => {
+      pointerGlow.style.transform = `translate3d(${pointerX}px, ${pointerY}px, 0) translate(-50%, -50%)`;
+      pointerGlow.classList.add("is-visible");
+      pointerFrame = 0;
+    });
+  }, { passive: true });
+
+  window.addEventListener("pointerleave", () => {
+    pointerGlow.classList.remove("is-visible");
+  }, { passive: true });
+}
+
+function setupDeferredVideos() {
+  if (!autoplayVideos.length) return;
+
+  autoplayVideos.forEach((video) => {
+    video.muted = true;
+    video.loop = true;
+    video.playsInline = true;
+  });
+
+  if (!("IntersectionObserver" in window)) return;
+
+  const videoObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      const video = entry.target;
+      if (entry.isIntersecting) {
+        window.setTimeout(() => {
+          video.play().catch(() => {
+            video.controls = true;
+          });
+        }, 950);
+      } else if (!video.paused) {
+        video.pause();
+      }
+    });
+  }, { threshold: 0.45 });
+
+  autoplayVideos.forEach((video) => videoObserver.observe(video));
+}
+
+const savedTheme = Number(readStorage(themeStorageKey));
 if (!Number.isNaN(savedTheme) && savedTheme >= 0 && savedTheme < themes.length) {
   themeIndex = savedTheme;
 }
 
-const savedMode = localStorage.getItem(modeStorageKey);
+const savedMode = readStorage(modeStorageKey);
 if (savedMode === "dark" || savedMode === "light") {
   colorMode = savedMode;
 } else {
@@ -177,4 +266,7 @@ filterButtons.forEach((button) => {
   button.addEventListener("click", () => filterProjects(button.dataset.filter));
 });
 setupReveal();
+setupLoader();
+setupPointerGlow();
+setupDeferredVideos();
 syncPageState();

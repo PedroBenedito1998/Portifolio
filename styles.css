@@ -15,6 +15,7 @@
   --button-bg: rgba(255, 255, 255, 0.03);
   --tag-bg: rgba(255, 255, 255, 0.05);
   --glass-card: rgba(0, 0, 0, 0.34);
+  --loader-card-bg: rgba(0, 0, 0, 0.42);
   --hero-grid: rgba(255, 255, 255, 0.07);
   --hero-overlay-a: rgba(0, 0, 0, 0.9);
   --hero-overlay-b: rgba(0, 0, 0, 0.68);
@@ -59,6 +60,7 @@ body[data-mode="light"] {
   --button-bg: color-mix(in srgb, var(--accent) 7%, rgba(17, 24, 39, 0.035));
   --tag-bg: color-mix(in srgb, var(--accent) 8%, rgba(17, 24, 39, 0.045));
   --glass-card: color-mix(in srgb, #ffffff 78%, var(--accent) 12%);
+  --loader-card-bg: color-mix(in srgb, #ffffff 86%, var(--accent) 10%);
   --hero-grid: color-mix(in srgb, var(--accent) 10%, rgba(17, 24, 39, 0.06));
   --hero-overlay-a: rgba(248, 250, 252, 0.92);
   --hero-overlay-b: rgba(248, 250, 252, 0.72);
@@ -86,6 +88,128 @@ body {
   font-family: "Inter", Arial, sans-serif;
   line-height: 1.6;
   transition: background 180ms ease, color 180ms ease;
+}
+
+.page-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 50% 42%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 28%),
+    color-mix(in srgb, var(--bg) 92%, var(--text) 8%);
+  animation: loaderAutoHide 420ms ease 1250ms forwards;
+  transition: opacity 320ms ease, visibility 320ms ease;
+}
+
+.page-loader.is-hidden {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.loader-card {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  width: min(280px, calc(100% - 48px));
+  padding: 26px;
+  border: 1px solid color-mix(in srgb, var(--accent) 36%, transparent);
+  border-radius: 22px;
+  background: var(--loader-card-bg);
+  box-shadow:
+    0 28px 80px var(--deep-shadow),
+    0 0 38px color-mix(in srgb, var(--accent) 16%, transparent);
+}
+
+.loader-card img {
+  width: 72px;
+  height: 72px;
+  object-fit: cover;
+  object-position: center 18%;
+  border: 2px solid var(--accent);
+  border-radius: 50%;
+  animation: loaderFloat 900ms ease-in-out infinite alternate;
+}
+
+.loader-card span {
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.loader-card strong {
+  color: var(--text);
+  font-size: 18px;
+}
+
+.loader-bar {
+  overflow: hidden;
+  width: 100%;
+  height: 5px;
+  margin-top: 4px;
+  border-radius: 999px;
+  background: var(--tag-bg);
+}
+
+.loader-bar i {
+  display: block;
+  width: 42%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  animation: loaderRun 950ms ease-in-out infinite;
+}
+
+.pointer-glow {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 35;
+  width: 132px;
+  height: 132px;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  background:
+    radial-gradient(circle, color-mix(in srgb, var(--accent) 34%, transparent) 0 2px, transparent 3px),
+    radial-gradient(circle, color-mix(in srgb, var(--accent) 14%, transparent), transparent 68%);
+  transition: opacity 140ms ease;
+  will-change: transform, opacity;
+}
+
+.pointer-glow.is-visible {
+  opacity: 1;
+}
+
+@keyframes loaderAutoHide {
+  to {
+    visibility: hidden;
+    opacity: 0;
+  }
+}
+
+@keyframes loaderFloat {
+  from {
+    transform: translateY(0) rotate(-2deg);
+  }
+
+  to {
+    transform: translateY(-8px) rotate(2deg);
+  }
+}
+
+@keyframes loaderRun {
+  from {
+    transform: translateX(-120%);
+  }
+
+  to {
+    transform: translateX(260%);
+  }
 }
 
 section {
