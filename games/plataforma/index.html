@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Jogo de plataforma em JavaScript criado por Pedro Benedito.">
+  <title>Corrida de Plataforma | Pedro Benedito</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../styles.css">
+</head>
+<body class="game-page platform-page">
+  <header class="site-header" data-header>
+    <a class="brand" href="https://github.com/PedroBenedito1998" target="_blank" rel="noreferrer" aria-label="Abrir GitHub atual de Pedro Benedito">
+      <img src="../../assets/old/newPROFILE.jpg" alt="Foto de Pedro Benedito">
+      <span>Pedro Benedito</span>
+    </a>
+
+    <nav class="nav" aria-label="Navegação do jogo">
+      <a href="../../index.html#projetos">Voltar ao Portfólio</a>
+      <a href="#regras">Regras</a>
+      <a href="#jogo">Jogar</a>
+    </nav>
+
+    <div class="header-controls" aria-label="Opções visuais do site">
+      <button class="mode-switch" type="button" data-mode-switch role="switch" aria-checked="true" aria-label="Alternar modo escuro">
+        <span class="mode-switch-track" aria-hidden="true">
+          <span class="mode-switch-thumb" data-mode-icon>☾</span>
+        </span>
+        <span class="mode-switch-text" data-mode-label>Modo escuro</span>
+      </button>
+      <button class="theme-button" type="button" data-theme-button aria-label="Mudar cor do site">
+        <span>Mudar tema</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="toast" data-mode-toast role="status" aria-live="polite"></div>
+
+  <main>
+    <section class="game-hero" id="regras">
+      <div class="section-shell game-layout">
+        <div>
+          <p class="section-kicker">Canvas + sprites</p>
+          <h1>Corrida de Plataforma</h1>
+          <p class="hero-lead">Escolha um personagem e atravesse a trilha noturna desviando de pedras, troncos de treino e corvos.</p>
+        </div>
+        <div class="rules-box">
+          <h2>Controles</h2>
+          <p><strong>Enter</strong> confirma. Na seleção, <strong>A</strong> vai para a direita e <strong>D</strong> vai para a esquerda. Durante o jogo, use <strong>W</strong> ou <strong>Seta para cima</strong> para pular e <strong>Espaço</strong> para atacar. O ataque destrói apenas um obstáculo e recarrega a cada 1 segundo.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="game-band" id="jogo">
+      <div class="section-shell">
+        <div class="game-card platform-card">
+          <div class="score-row">
+            <span>Pontos: <strong data-platform-score>0</strong></span>
+            <span>Recorde: <strong data-platform-best>0</strong></span>
+            <span data-platform-attack>Ataque: pronto</span>
+            <span data-platform-status>Pronto</span>
+          </div>
+
+          <div class="platform-stage">
+            <canvas class="platform-canvas" width="960" height="420" data-platform-canvas></canvas>
+            <div class="platform-overlay" data-platform-overlay>
+              <p data-platform-kicker>Corrida infinita</p>
+              <h2 data-platform-title>Play Game</h2>
+              <span data-platform-help>Comece pela seleção de personagem.</span>
+            </div>
+          </div>
+
+          <div class="platform-character-strip" data-platform-strip aria-label="Personagens disponíveis"></div>
+
+          <div class="hero-actions platform-actions">
+            <button class="button primary" type="button" data-platform-play>Play Game</button>
+            <button class="button secondary" type="button" data-platform-select>Select Character</button>
+            <button class="button primary" type="button" data-platform-retry hidden>Tentar novamente</button>
+            <button class="button secondary" type="button" data-platform-change hidden>Selecionar personagem</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../../script.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 96">
+  <defs>
+    <linearGradient id="rockShade" x1="20" y1="12" x2="104" y2="88" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#8f97a8"/>
+      <stop offset=".48" stop-color="#555d70"/>
+      <stop offset="1" stop-color="#252b39"/>
+    </linearGradient>
+  </defs>
+  <path fill="#0d0f16" opacity=".35" d="M20 82c21 11 66 12 89 2 5 2 10 4 14 7-35 8-81 8-119 0 4-4 9-7 16-9z"/>
+  <path fill="url(#rockShade)" stroke="#151924" stroke-width="6" stroke-linejoin="round" d="M10 72 24 35l25-22 35 3 25 25 7 31-24 16H33z"/>
+  <path fill="none" stroke="#b7c0d3" stroke-width="5" stroke-linecap="round" opacity=".55" d="M34 39 49 25m28 2 20 21M35 69h50"/>
+  <path fill="#2d3445" opacity=".55" d="M24 72h68l-18 11H33z"/>
+</svg>
