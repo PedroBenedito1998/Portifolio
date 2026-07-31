@@ -697,6 +697,10 @@ h3 {
   padding: 8px 12px;
 }
 
+.project-notes + .button {
+  margin-top: 18px;
+}
+
 .project-actions .button,
 .game-tile .button {
   min-width: 92px;
@@ -1492,6 +1496,10 @@ h3 {
   grid-template-columns: repeat(4, minmax(62px, 1fr));
   gap: 10px;
   margin-top: 18px;
+}
+
+.memory-grid + .hero-actions {
+  margin-top: 22px;
 }
 
 .memory-card {
