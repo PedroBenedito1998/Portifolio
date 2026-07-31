@@ -174,6 +174,7 @@ function requestPageStateSync() {
 }
 
 function finishLoading() {
+  document.body.classList.remove("is-loading");
   if (!loader) return;
   loader.classList.add("is-hidden");
   window.setTimeout(() => {
@@ -184,10 +185,15 @@ function finishLoading() {
 }
 
 function setupLoader() {
-  if (!loader) return;
-  window.setTimeout(finishLoading, 900);
-  window.setTimeout(finishLoading, 1800);
+  if (!loader) {
+    document.body.classList.remove("is-loading");
+    return;
+  }
+  window.addEventListener("load", () => window.setTimeout(finishLoading, 720), { once: true });
+  window.setTimeout(finishLoading, 2200);
 }
+
+setupLoader();
 
 function setupPointerGlow() {
   if (!pointerGlow) return;
@@ -266,7 +272,6 @@ filterButtons.forEach((button) => {
   button.addEventListener("click", () => filterProjects(button.dataset.filter));
 });
 setupReveal();
-setupLoader();
 setupPointerGlow();
 setupDeferredVideos();
 syncPageState();
