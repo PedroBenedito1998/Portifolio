@@ -4,7 +4,6 @@ const modeSwitch = document.querySelector("[data-mode-switch]");
 const modeIcon = document.querySelector("[data-mode-icon]");
 const modeLabel = document.querySelector("[data-mode-label]");
 const modeToast = document.querySelector("[data-mode-toast]");
-const loader = document.querySelector("[data-loader]");
 const filterButtons = document.querySelectorAll("[data-filter]");
 const projectCards = document.querySelectorAll("[data-project-card]");
 const revealCards = document.querySelectorAll(".reveal-card");
@@ -152,30 +151,6 @@ function requestPageStateSync() {
   scrollFrame = window.requestAnimationFrame(syncPageState);
 }
 
-function setupAnchorScroll() {
-  document.querySelectorAll('a[href^="#"]').forEach((link) => {
-    link.addEventListener("click", (event) => {
-      const targetId = link.getAttribute("href");
-      if (!targetId || targetId === "#") return;
-
-      const target = document.querySelector(targetId);
-      if (!target) return;
-
-      event.preventDefault();
-      target.scrollIntoView({ block: "start", behavior: "smooth" });
-      window.history.pushState(null, "", targetId);
-      setActiveSection(target.id);
-    });
-  });
-}
-
-function finishLoading() {
-  document.body.classList.remove("is-loading");
-  if (!loader) return;
-  loader.classList.add("is-hidden");
-  window.setTimeout(() => loader.remove(), 420);
-}
-
 const savedTheme = Number(localStorage.getItem(themeStorageKey));
 if (!Number.isNaN(savedTheme) && savedTheme >= 0 && savedTheme < themes.length) {
   themeIndex = savedTheme;
@@ -201,8 +176,5 @@ themeButtons.forEach((button) => {
 filterButtons.forEach((button) => {
   button.addEventListener("click", () => filterProjects(button.dataset.filter));
 });
-setupAnchorScroll();
 setupReveal();
 syncPageState();
-window.addEventListener("load", () => window.setTimeout(finishLoading, 720), { once: true });
-window.setTimeout(finishLoading, 2200);

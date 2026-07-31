@@ -11,18 +11,8 @@
   <link rel="icon" type="image/png" href="assets/favicon.png">
   <link rel="apple-touch-icon" href="assets/favicon.png">
   <link rel="stylesheet" href="styles.css">
-  <noscript><style>.page-loader{display:none}</style></noscript>
 </head>
-<body class="is-loading">
-  <div class="page-loader" data-loader aria-live="polite" aria-label="Carregando portfólio">
-    <div class="loader-card">
-      <img src="assets/old/newPROFILE.jpg" alt="">
-      <span>Preparando portfólio</span>
-      <strong>Carregando projetos...</strong>
-      <div class="loader-bar" aria-hidden="true"><i></i></div>
-    </div>
-  </div>
-
+<body>
   <header class="site-header" data-header>
     <a class="brand" href="https://github.com/PedroBenedito1998" target="_blank" rel="noreferrer" aria-label="Abrir GitHub atual de Pedro Benedito">
       <img src="assets/old/newPROFILE.jpg" alt="Foto de Pedro Benedito">
@@ -146,7 +136,7 @@
         <div class="project-list">
           <article class="project-row reveal-card" data-project-card data-kind="java">
             <div class="project-preview video-media">
-              <video src="assets/old/demo.mp4" autoplay muted loop playsinline preload="metadata"></video>
+              <video src="assets/old/demo.mp4" controls muted playsinline preload="none"></video>
             </div>
             <div class="project-info">
               <p class="project-tag">Java + JavaFX</p>
