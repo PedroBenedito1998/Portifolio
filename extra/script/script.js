@@ -70,7 +70,7 @@ function resetGame(message) {
   guessInput.value = "";
   results.innerHTML = "";
   checkArea.style.display = "none";
-  playArea.style.display = "block";
+  playArea.style.display = "grid";
   playButton.style.display = "inline-flex";
   setFeedback(message, "info");
 }

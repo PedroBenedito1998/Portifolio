@@ -1415,6 +1415,26 @@ h3 {
   margin: 0 auto;
 }
 
+.bulls-card {
+  display: grid;
+  gap: 18px;
+}
+
+.bulls-start {
+  display: grid;
+  gap: 12px;
+}
+
+.bulls-start p:not(.section-kicker) {
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+.bulls-card .hero-actions {
+  margin-top: 4px;
+}
+
 .score-row {
   display: flex;
   justify-content: space-between;

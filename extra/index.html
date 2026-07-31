@@ -17,11 +17,10 @@
       <span>Pedro Benedito</span>
     </a>
 
-    <nav class="nav" aria-label="Navegação principal">
-      <a href="../index.html#inicio">Apresentação</a>
-      <a href="../index.html#projetos">Projetos</a>
-      <a href="../index.html#experiencia">Experiência</a>
-      <a href="../index.html#contato">Contato</a>
+    <nav class="nav" aria-label="Navegação do jogo">
+      <a href="../index.html#projetos">Voltar ao Portfólio</a>
+      <a href="#regras">Regras</a>
+      <a href="#jogo">Jogar</a>
     </nav>
 
     <div class="header-controls" aria-label="Opcoes visuais do site">
@@ -43,7 +42,7 @@
     <section class="game-hero" id="regras">
       <div class="section-shell game-layout">
         <div>
-          <p class="section-kicker">Projeto extra</p>
+          <p class="section-kicker">JavaScript + lógica</p>
           <h1>Touros e Vacas</h1>
           <p class="hero-lead">
             Um jogo de lógica: descubra a senha de 4 dígitos diferentes usando as dicas
@@ -62,30 +61,38 @@
     </section>
 
     <section class="game-band" id="jogo">
-      <div class="section-shell game-panel">
-        <div class="game-card" id="gerarNumeros">
-          <p class="section-kicker">Jogo</p>
-          <h2>Vamos jogar</h2>
-          <button class="button primary playGame" id="playGame">Começar jogo</button>
-        </div>
-
-        <div class="game-card verificacao" style="display: none">
-          <label class="game-label" for="senhaDeChute">Seu palpite</label>
-          <div class="guess-row">
-            <input type="text" id="senhaDeChute" maxlength="4" inputmode="numeric" placeholder="1234">
-            <button class="button primary" id="verificarBtn">Verificar</button>
+      <div class="section-shell">
+        <div class="game-card playfield-card bulls-card">
+          <div id="gerarNumeros" class="bulls-start">
+            <div class="score-row">
+              <span>Tentativas: <strong>10</strong></span>
+              <span>Senha de 4 dígitos</span>
+            </div>
+            <p class="section-kicker">Jogo</p>
+            <h2>Comece a rodada</h2>
+            <p>O sistema cria uma senha secreta com 4 números diferentes. Use as pistas para ajustar o próximo palpite.</p>
+            <div class="hero-actions">
+              <button class="button primary playGame" id="playGame">Começar jogo</button>
+            </div>
           </div>
-          <div id="feedback" class="game-feedback" role="status"></div>
-          <div id="resultados" class="resultados"></div>
+
+          <div class="verificacao" style="display: none">
+            <div class="score-row">
+              <span>Rodada ativa</span>
+              <span>10 tentativas</span>
+            </div>
+            <label class="game-label" for="senhaDeChute">Seu palpite</label>
+            <div class="guess-row">
+              <input type="text" id="senhaDeChute" maxlength="4" inputmode="numeric" placeholder="1234">
+              <button class="button primary" id="verificarBtn">Verificar</button>
+            </div>
+            <div id="feedback" class="game-feedback" role="status"></div>
+            <div id="resultados" class="resultados"></div>
+          </div>
         </div>
       </div>
     </section>
   </main>
-
-  <footer class="site-footer">
-    <span>Touros e Vacas</span>
-    <span>Projeto JavaScript</span>
-  </footer>
 
   <script src="../script.js"></script>
   <script src="script/script.js"></script>
