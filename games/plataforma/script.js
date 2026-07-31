@@ -964,7 +964,8 @@ function drawCrowObstacle(obstacle) {
   const x = obstacle.x + obstacle.width * 0.5;
   const y = obstacle.y + bob + obstacle.height * 0.5;
   const scale = obstacle.width / 150;
-  const wingLift = wing * 16;
+  const wingLift = wing * 18;
+  const wingCurl = Math.cos(distance * 0.09 + obstacle.phase) * 7;
 
   ctx.save();
   ctx.translate(x, y);
@@ -973,33 +974,47 @@ function drawCrowObstacle(obstacle) {
 
   ctx.fillStyle = "rgba(0, 0, 0, 0.26)";
   ctx.beginPath();
-  ctx.ellipse(0, 28, 54, 9, 0, 0, Math.PI * 2);
+  ctx.ellipse(6, 30, 58, 8, 0, 0, Math.PI * 2);
   ctx.fill();
 
-  const wingGradient = ctx.createLinearGradient(-70, -28, 70, 34);
-  wingGradient.addColorStop(0, "#4d638a");
-  wingGradient.addColorStop(0.42, "#172032");
+  const wingGradient = ctx.createLinearGradient(-36, -52, 48, 42);
+  wingGradient.addColorStop(0, "#526990");
+  wingGradient.addColorStop(0.34, "#1b2538");
   wingGradient.addColorStop(1, "#03050a");
   ctx.fillStyle = wingGradient;
   ctx.strokeStyle = "#050711";
   ctx.lineWidth = 3;
 
+  ctx.save();
+  ctx.globalAlpha = 0.34;
   ctx.beginPath();
-  ctx.moveTo(-10, -4);
-  ctx.lineTo(-74, -14 - wingLift);
-  ctx.lineTo(-58, 12 - wingLift * 0.25);
-  ctx.lineTo(-36, 22 + wingLift * 0.20);
-  ctx.lineTo(-14, 10);
+  ctx.moveTo(-4, -2);
+  ctx.lineTo(18, -50 - wingLift * 0.55);
+  ctx.lineTo(46, -34 - wingLift * 0.35);
+  ctx.lineTo(35, 6);
+  ctx.lineTo(5, 12);
+  ctx.closePath();
+  ctx.fill();
+  ctx.restore();
+
+  ctx.beginPath();
+  ctx.moveTo(-10, -3);
+  ctx.lineTo(-30, -44 - wingLift);
+  ctx.lineTo(-9, -37 - wingLift * 0.72);
+  ctx.lineTo(14, -18 - wingLift * 0.35);
+  ctx.lineTo(29, 4 + wingCurl);
+  ctx.lineTo(4, 13);
   ctx.closePath();
   ctx.fill();
   ctx.stroke();
 
   ctx.beginPath();
-  ctx.moveTo(12, -4);
-  ctx.lineTo(74, -14 - wingLift);
-  ctx.lineTo(58, 12 - wingLift * 0.25);
-  ctx.lineTo(36, 22 + wingLift * 0.20);
-  ctx.lineTo(14, 10);
+  ctx.moveTo(2, 8);
+  ctx.lineTo(30, 20 + wingLift * 0.35);
+  ctx.lineTo(58, 22 + wingLift * 0.48);
+  ctx.lineTo(42, 35 + wingLift * 0.22);
+  ctx.lineTo(15, 27);
+  ctx.lineTo(-4, 15);
   ctx.closePath();
   ctx.fill();
   ctx.stroke();
@@ -1008,54 +1023,68 @@ function drawCrowObstacle(obstacle) {
   ctx.lineWidth = 2;
   for (let i = 0; i < 4; i += 1) {
     ctx.beginPath();
-    ctx.moveTo(-18, 0 + i * 4);
-    ctx.lineTo(-62 + i * 10, -11 - wingLift * 0.72 + i * 7);
+    ctx.moveTo(-8 + i * 4, -2 + i * 2);
+    ctx.lineTo(-27 + i * 13, -36 - wingLift * 0.82 + i * 8);
     ctx.stroke();
 
     ctx.beginPath();
-    ctx.moveTo(18, 0 + i * 4);
-    ctx.lineTo(62 - i * 10, -11 - wingLift * 0.72 + i * 7);
+    ctx.moveTo(9 + i * 5, 13 + i * 3);
+    ctx.lineTo(48 - i * 7, 23 + wingLift * 0.32 + i * 5);
     ctx.stroke();
   }
 
-  ctx.fillStyle = "#0c111d";
-  ctx.strokeStyle = "#32415e";
+  ctx.fillStyle = "#090d15";
+  ctx.strokeStyle = "#2c3a55";
   ctx.lineWidth = 3;
   ctx.beginPath();
-  ctx.ellipse(0, 3, 25, 20, 0, 0, Math.PI * 2);
+  ctx.ellipse(6, 6, 34, 17, -0.08, 0, Math.PI * 2);
   ctx.fill();
   ctx.stroke();
 
-  ctx.fillStyle = "#171f31";
+  ctx.fillStyle = "#151d2c";
   ctx.beginPath();
-  ctx.ellipse(-6, -1, 20, 11, 0, 0, Math.PI * 2);
+  ctx.ellipse(-1, 2, 25, 9, -0.08, 0, Math.PI * 2);
   ctx.fill();
 
-  ctx.fillStyle = "#111827";
+  ctx.fillStyle = "#0b101a";
   ctx.beginPath();
-  ctx.arc(21, -4, 13, 0, Math.PI * 2);
+  ctx.arc(-31, 0, 13, 0, Math.PI * 2);
   ctx.fill();
 
-  ctx.fillStyle = "#ffd98d";
+  ctx.fillStyle = "#1b1f28";
   ctx.beginPath();
-  ctx.moveTo(32, -6);
-  ctx.lineTo(54, -1);
-  ctx.lineTo(32, 6);
+  ctx.moveTo(-42, -4);
+  ctx.lineTo(-66, 0);
+  ctx.lineTo(-42, 7);
   ctx.closePath();
   ctx.fill();
+
+  ctx.fillStyle = "#657086";
+  ctx.fillRect(-55, 0, 12, 2);
 
   ctx.fillStyle = "#bff1ff";
-  ctx.fillRect(23, -9, 5, 5);
+  ctx.fillRect(-33, -6, 4, 4);
   ctx.fillStyle = "#031018";
-  ctx.fillRect(25, -8, 2, 2);
+  ctx.fillRect(-31, -5, 2, 2);
 
-  ctx.fillStyle = "#111827";
+  ctx.fillStyle = "#070b12";
   ctx.beginPath();
-  ctx.moveTo(-20, 12);
-  ctx.lineTo(-36, 31);
-  ctx.lineTo(-7, 23);
+  ctx.moveTo(33, 9);
+  ctx.lineTo(64, -5);
+  ctx.lineTo(52, 12);
+  ctx.lineTo(69, 21);
+  ctx.lineTo(34, 21);
   ctx.closePath();
   ctx.fill();
+
+  ctx.strokeStyle = "rgba(98, 116, 156, 0.62)";
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(38, 9);
+  ctx.lineTo(58, 2);
+  ctx.moveTo(40, 15);
+  ctx.lineTo(61, 20);
+  ctx.stroke();
 
   ctx.restore();
 }
